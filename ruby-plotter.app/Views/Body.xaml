@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="ruby_plotter.app.Views.Body"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
+             xmlns:views="clr-namespace:ruby_plotter.app.Views"
+             xmlns:viewModel="clr-namespace:ruby_plotter.app.ViewModel"
+             xmlns:converters="clr-namespace:ruby_plotter.app.Contracts.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:ControlVisibleModeConverter x:Key="ControlVisibleModeConverter"/>
+        <DataTemplate DataType="{x:Type viewModel:SinViewModel}">
+            <views:SinControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CosViewModel}">
+            <views:CosControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SincViewModel}">
+            <views:SincControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PlotViewModel}">
+            <views:Plotter/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <!-- User Control's main grid -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Left (control) grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Check box panel -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <CheckBox
+                    Template="{DynamicResource CheckBoxControlTemplate}"
+                    Style="{StaticResource ControlCheckBox}"
+                    Command="{Binding SinViewCommand}"
+                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">sin</CheckBox>
+                <CheckBox 
+                    Template="{DynamicResource CheckBoxControlTemplate}" 
+                    Style="{StaticResource ControlCheckBox}"
+                    Command="{Binding CosViewCommand}"
+                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">cos</CheckBox>
+                <CheckBox 
+                    Template="{DynamicResource CheckBoxControlTemplate}" 
+                    Style="{StaticResource ControlCheckBox}"
+                    Command="{Binding SincViewCommand}"
+                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">Sinc</CheckBox>
+            </StackPanel>
+
+            <!-- Placeholder for future controls -->
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ContentControl
+                    Grid.Row="0"
+                    Content="{Binding SinViewModel}"
+                    Visibility="{Binding SinModelVisibleMode, Converter={StaticResource ControlVisibleModeConverter}}"/>    
+                <ContentControl
+                    Grid.Row="1"
+                    Content="{Binding CosViewModel}"
+                    Visibility="{Binding CosModelVisibleMode, Converter={StaticResource ControlVisibleModeConverter}}"/>
+                <ContentControl
+                    Grid.Row="2"
+                    Content="{Binding SincViewModel}"
+                    Visibility="{Binding SincModelVisibleMode, Converter={StaticResource ControlVisibleModeConverter}}"/>
+            </Grid>
+        </Grid>
+
+        <!-- Right (plot) grid -->
+        <ContentControl 
+            Grid.Column="1" 
+            Content="{Binding PlotView.Graphs}"/>
+    </Grid>
+</UserControl>

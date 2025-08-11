@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Header styling -->
+    <SolidColorBrush x:Key="HeaderBackground" Color="#000080" />
+    <Style TargetType="TextBlock" x:Key="HeaderTextBlock">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="10 20 10 20"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="VersionTextBlock">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Gold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="10 5 10 5"/>
+    </Style>
+    <Style TargetType="ToolTip">
+        <Setter Property = "Background" Value="#ffffe6"/>
+    </Style>
+    
+    <!-- Input textboxes styling -->
+    <Style TargetType="TextBlock" x:Key="InputTextBlock">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="0 5 5 15" />
+    </Style>
+    <Style TargetType="TextBox" x:Key="InputTextBox">        
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="0 5 5 15" />
+        <Setter Property="BorderBrush" Value="#cccccc"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="#f0f0f0"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <TextBlock 
+                            Foreground="Red"
+                            FontSize="12"
+                            Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                   Margin="3 0 0 0"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Background" Value="#FFB499 "/>
+                <Setter Property="Margin" Value="0 0 0 25"/>
+                <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={RelativeSource Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
