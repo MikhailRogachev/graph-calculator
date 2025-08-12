@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace ruby_plotter.app.ViewModel;
 
+/// <summary>
+/// This class provides a base implementation for view models that require validation.
+/// </summary>
 public class ValidationViewModelBase : ViewModelBase, INotifyDataErrorInfo
 {
     private readonly Dictionary<string, List<string>> _errorByPropertyName = new();

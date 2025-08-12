@@ -1,5 +1,10 @@
 ﻿namespace ruby_plotter.app.Contracts.Options;
 
+/// <summary>
+/// Represents the default configuration settings for generating sine wave parameters.
+/// This class provides default minimum and maximum values for various properties of a sine wave, 
+/// including amplitude, frequency, duration, and phase.
+/// </summary>
 public class SinDefaultSettings
 {
     public double AmplitudeMin { get; set; } = -2.5;

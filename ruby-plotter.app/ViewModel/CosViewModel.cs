@@ -5,6 +5,9 @@ using System.Windows.Controls;
 
 namespace ruby_plotter.app.ViewModel;
 
+/// <summary>
+/// This class represents the ViewModel for the Cosine wave parameters.
+/// </summary>
 public class CosViewModel : ValidationViewModelBase
 {
     private double _amplitude;
@@ -23,8 +26,15 @@ public class CosViewModel : ValidationViewModelBase
 
         RefreshCommand = new DelegateCommand(Refresh);
     }
+
+    /// <summary>
+    /// This command is used to refresh the values of the Cos wave parameters.
+    /// </summary>
     public DelegateCommand RefreshCommand { get; }
 
+    /// <summary>
+    /// Gets or sets the Amplitude of the Cos wave.
+    /// </summary>
     public double Amplitude
     {
         get => _amplitude;
@@ -53,6 +63,12 @@ public class CosViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the Phase of the Cos wave. 
+    /// </summary>
+    /// <remarks>
+    ///     The value of the Phase is in degrees.
+    /// </remarks>
     public int Phase
     {
         get => _phase;
@@ -83,8 +99,11 @@ public class CosViewModel : ValidationViewModelBase
     }
 
     /// <summary>
-    /// The Sine wave frequency (kHz).
+    /// Gets or sets the Frequency of the Cos wave.
     /// </summary>
+    /// <remarks>
+    ///     The value of the Frequency is in kHz.
+    /// </remarks>
     public double Frequency
     {
         get => _frequncy;
@@ -114,8 +133,11 @@ public class CosViewModel : ValidationViewModelBase
     }
 
     /// <summary>
-    /// The duration of the signal in Seconds.
+    /// Gets or sets the Duration of the Cos wave.
     /// </summary>
+    /// <remarks>
+    ///     The value of the Duration is in seconds.
+    /// </remarks>
     public double Duration
     {
         get => _duration;
@@ -146,7 +168,12 @@ public class CosViewModel : ValidationViewModelBase
         }
     }
 
-
+    /// <summary>
+    /// This method is used to refresh the values of the Cos wave parameters.
+    /// </summary>
+    /// <param name="parameters">
+    ///     The parameters that are used to refresh the values of the Cos wave parameters.
+    /// </param>
     private void Refresh(object? parameters)
     {
         var textBox = parameters as TextBox;

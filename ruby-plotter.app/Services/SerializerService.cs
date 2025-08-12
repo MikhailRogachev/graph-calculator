@@ -5,6 +5,9 @@ using System.IO;
 
 namespace ruby_plotter.app.Services;
 
+/// <summary>
+/// This service provides methods for serializing and deserializing objects to and from files.
+/// </summary>
 public class SerializerService : ISerializerService
 {
     private readonly AppDefaultSettings _appSettings;
@@ -14,6 +17,15 @@ public class SerializerService : ISerializerService
         _appSettings = options == null ? throw new ArgumentNullException(nameof(options)) : options.Value;
     }
 
+    /// <summary>
+    /// This function retrieves the file path from the application settings.
+    /// </summary>
+    /// <returns>
+    ///     The full file path where the data is stored.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    ///     This exception is thrown if the default file path is null or empty.
+    /// </exception>
     private string GetFilePath()
     {
         var baseDirectory = AppContext.BaseDirectory;
@@ -26,6 +38,14 @@ public class SerializerService : ISerializerService
         return Path.Combine(baseDirectory, _appSettings.DefaultFilePath!)!;
     }
 
+    /// <inheritdoc cref="ISerializerService.DeserializeFromFile{T}(string)"/>/>
+    /// <returns>
+    ///     The object type T deserialized from the specified file.
+    ///     In case the file with data doesn't exist, it returns null.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    ///     This exception is thrown if the file cannot be read or deserialized.
+    /// </exception>
     public T? DeserializeFromFile<T>(string fileName) where T : class
     {
         var path = GetFilePath();
@@ -47,6 +67,10 @@ public class SerializerService : ISerializerService
         }
     }
 
+    /// <inheritdoc cref="ISerializerService.SerializeToFile{T}(T, string)"/>/>
+    /// <exception cref="InvalidOperationException">
+    ///     This exception is thrown if the data cannot be serialized to the file.
+    /// </exception>
     public bool SerializeToFile<T>(T data, string fileName)
     {
         var path = GetFilePath();

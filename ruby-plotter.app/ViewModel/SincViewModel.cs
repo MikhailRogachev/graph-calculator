@@ -28,6 +28,12 @@ public class SincViewModel : ValidationViewModelBase
         RefreshCommand = new DelegateCommand(Refresh);
     }
 
+    /// <summary>
+    /// Gets or sets the Frequency of the Sine wave.
+    /// </summary>
+    /// <remarks>
+    ///     The value of the Phase is in kHz.
+    /// </remarks>
     public double Frequency
     {
         get => _frequncy;
@@ -56,6 +62,12 @@ public class SincViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the value for the Sinc function start point.
+    /// </summary>
+    /// <remarks>
+    ///     The value of the xMin is in seconds.
+    /// </remarks>
     public double xMin
     {
         get => _xmin;
@@ -83,6 +95,12 @@ public class SincViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the value for the Sinc function end point.
+    /// </summary>
+    /// <remarks>
+    ///     The value of the xMax is in seconds.
+    /// </remarks>
     public double xMax
     {
         get => _xmax;
@@ -110,6 +128,12 @@ public class SincViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// This method is used to refresh the values of the Sinc wave parameters.
+    /// </summary>
+    /// <param name="parameters">
+    ///     The parameters that are used to refresh the values of the Sinc wave parameters.
+    /// </param>
     private void Refresh(object? parameters)
     {
         var textBox = parameters as TextBox;

@@ -27,8 +27,14 @@ public class SinViewModel : ValidationViewModelBase
         RefreshCommand = new DelegateCommand(Refresh);
     }
 
+    /// <summary>
+    /// This command is used to refresh the values of the Sine wave parameters.
+    /// </summary>
     public DelegateCommand RefreshCommand { get; }
 
+    /// <summary>
+    /// Gets or sets the Amplitude of the Sine wave.
+    /// </summary>
     public double Amplitude
     {
         get => _amplitude;
@@ -57,6 +63,12 @@ public class SinViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the Phase of the Sine wave. 
+    /// </summary>
+    /// <remarks>
+    ///     The value of the Phase is in degrees.
+    /// </remarks>
     public int Phase
     {
         get => _phase;
@@ -87,8 +99,11 @@ public class SinViewModel : ValidationViewModelBase
     }
 
     /// <summary>
-    /// The Sine wave frequency (kHz).
+    /// Gets or sets the Frequency of the Sine wave.
     /// </summary>
+    /// <remarks>
+    ///     The value of the Frequency is in kHz.
+    /// </remarks>
     public double Frequency
     {
         get => _frequncy;
@@ -118,8 +133,11 @@ public class SinViewModel : ValidationViewModelBase
     }
 
     /// <summary>
-    /// The duration of the signal in Seconds.
+    /// Gets or sets the Duration of the Sine wave.
     /// </summary>
+    /// <remarks>
+    ///     The value of the Duration is in seconds.
+    /// </remarks>
     public double Duration
     {
         get => _duration;
@@ -150,6 +168,12 @@ public class SinViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// This method is used to refresh the values of the Sine wave parameters.
+    /// </summary>
+    /// <param name="parameters">
+    ///     The parameters that are used to refresh the values of the Sine wave parameters.
+    /// </param>
     private void Refresh(object? parameters)
     {
         var textBox = parameters as TextBox;

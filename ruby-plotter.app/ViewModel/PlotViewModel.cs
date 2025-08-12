@@ -7,17 +7,7 @@ using ScottPlot.WPF;
 namespace ruby_plotter.app.ViewModel;
 
 /// <summary>
-/// Axis Limits can be set:
-///     WpfPlot.Plot.Axes.SetLimits(_xMin, _xMax, _yMin, _yMax);
-///     
-/// Generate Sin
-///     Sin(int count = 51, double mult = 1, double offset = 0, double oscillations = 1, double phase = 0) 
-///     Return an array of sine waves between -1 and 1
-///     
-///     count: number of points to generate
-/// 
-/// 
-/// 
+/// this class is the ViewModel for the PlotView.
 /// </summary>
 public class PlotViewModel : ViewModelBase
 {
@@ -34,6 +24,12 @@ public class PlotViewModel : ViewModelBase
 
     #region procedures and functions
 
+    /// <summary>
+    /// This procedure plots the data on the graph.
+    /// </summary>
+    /// <param name="sinView">SinViewModel</param>
+    /// <param name="cosView">CosViewModel</param>
+    /// <param name="sincView">SincViewModel</param>
     public void Plot(SinViewModel? sinView = null, CosViewModel? cosView = null, SincViewModel? sincView = null)
     {
         Graphs.Plot.Clear();
@@ -166,6 +162,9 @@ public class PlotViewModel : ViewModelBase
         AddPlotScatter(typeof(SincViewModel), scatter);
     }
 
+    /// <summary>
+    /// This procedure initializes the axis of the graph.
+    /// </summary>
     private void AxisInitialization()
     {
         // axis limits
@@ -180,6 +179,14 @@ public class PlotViewModel : ViewModelBase
         Graphs.Refresh();
     }
 
+    /// <summary>
+    /// This procedure plots the data on the graph.
+    /// </summary>
+    /// <param name="ts">Time marks array</param>
+    /// <param name="ys">Amplitude marks array</param>
+    /// <param name="graphName">The graph's name</param>
+    /// <param name="color">The graph's color</param>
+    /// <returns>Scatter builded</returns>
     private Scatter GrapfPlotting(double[] ts, double[] ys, string graphName, Color color)
     {
         var scatter = Graphs.Plot.Add.Scatter(ts, ys, color);
@@ -191,9 +198,6 @@ public class PlotViewModel : ViewModelBase
 
         return scatter;
     }
-
-
-
 
     #endregion
 }

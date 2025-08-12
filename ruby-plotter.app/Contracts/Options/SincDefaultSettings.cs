@@ -1,5 +1,10 @@
 ﻿namespace ruby_plotter.app.Contracts.Options;
 
+/// <summary>
+/// Represents the default settings for configuring Sinc function parameters.
+/// This class provides default values for frequency and range parameters commonly used in Sinc function
+/// calculations.
+/// </summary>
 public class SincDefaultSettings
 {
     public double FrequencyMin { get; set; } = 0.0;
