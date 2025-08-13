@@ -17,3 +17,13 @@ parameters, as well as a plotting area for the graphs.
 This diagram presents the application's main components and the relationships between them.
 
 ![image](docs/calculation-to-plot.svg)
+
+## Third-Party library
+The third-party library ScottPlot.WPF is an excellent option for application development. The main advantages of
+using this library are:
+• it's an open-source library with a permissive MIT license, so there are no restrictions on its use in
+commercial or personal projects;
+• it offers a wide range of tools for visualizing any kind of data, from simple line plots to complex charts;
+• it offers functionality to save graphs in vector format;
+• the library is designed to be very easy to implement and integrate into your software.
+References: [ScottPlot.WPF](https://scottplot.net/quickstart/wpf/)
