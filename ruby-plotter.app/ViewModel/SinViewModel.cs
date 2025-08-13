@@ -121,7 +121,7 @@ public class SinViewModel : ValidationViewModelBase
                 }
                 else if (value > _defaultSettings.FrequencyMax)
                 {
-                    AddError($"Value can't be more then {_defaultSettings.FrequencyMax}kHz");
+                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax}kHz");
                     _frequncy = _defaultSettings.FrequencyMax;
                 }
                 else

@@ -84,7 +84,7 @@ public class SincViewModel : ValidationViewModelBase
                 }
                 else if (value >= xMax)
                 {
-                    AddError("Value can't be more than xMax");
+                    AddError("xMin can't be euals or greater than xMax");
                     _xmin = _sincDefaultSettings.Xmin;
                 }
                 else

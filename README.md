@@ -14,3 +14,6 @@ application will be designed using the MVVM pattern and will contain a control p
 parameters, as well as a plotting area for the graphs.
 
 ## Component Diagram
+This diagram presents the application's main components and the relationships between them.
+
+![image](docs/calculation-to-plot.svg)
