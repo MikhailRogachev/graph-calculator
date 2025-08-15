@@ -9,7 +9,8 @@ public class CosDefaultSettings
 {
     public double AmplitudeMin { get; set; } = -2.5;
     public double AmplitudeMax { get; set; } = 2.5;
-    public double FrequencyMin { get; set; } = 0.0;
+    public double AmplitudeDefault { get; set; } = 1.0;
+    public double FrequencyDefault { get; set; } = 0.05;
     public double FrequencyMax { get; set; } = 10.0;
     public double DurationMax { get; set; } = 3.0;
     public double DurationMin { get; set; } = 0.0;
