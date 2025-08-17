@@ -18,8 +18,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <StackPanel 
@@ -73,7 +73,7 @@
                      Key="Enter" 
                      Command="{Binding RefreshCommand}"
                      CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}}"/>
-                </TextBox.InputBindings>    
+                </TextBox.InputBindings> 
         </TextBox>
 
         <TextBlock 
