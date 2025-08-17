@@ -73,19 +73,17 @@ public class SincViewModel : ValidationViewModelBase
         get => _xmin;
         set
         {
+            ClearErrors();
+
             if (Math.Abs(_xmin - value) > 0.001)
             {
-                ClearErrors();
-
                 if (value < _sincDefaultSettings.Xmin)
                 {
                     AddError($"Value can't be less than {_sincDefaultSettings.Xmin}");
-                    _xmin = _sincDefaultSettings.Xmin;
                 }
                 else if (value >= xMax)
                 {
                     AddError("xMin can't be euals or greater than xMax");
-                    _xmin = _sincDefaultSettings.Xmin;
                 }
                 else
                     _xmin = value;
@@ -113,15 +111,16 @@ public class SincViewModel : ValidationViewModelBase
                 if (value > _sincDefaultSettings.Xmax)
                 {
                     AddError($"Value can't be greater then {_sincDefaultSettings.Xmax}");
-                    _xmax = _sincDefaultSettings.Xmax;
                 }
                 else if (value <= xMin)
                 {
                     AddError("Value can't be less than xMin");
-                    _xmax = _sincDefaultSettings.Xmax;
                 }
                 else
+                {
                     _xmax = value;
+
+                }
 
                 OnPropertyChanged(nameof(xMax));
             }

@@ -34,15 +34,18 @@ public static class FocusOnValidationErrorHandler
 
     private static void OnPreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
-        if (sender is UIElement element && Validation.GetHasError(element))
+        if (sender is TextBox textBox)
         {
-            e.Handled = true;
-            element.Dispatcher.BeginInvoke(
-                new Action(() =>
-                {
-                    Keyboard.Focus(element);
-                }),
-                System.Windows.Threading.DispatcherPriority.Input);
+            if (Validation.GetHasError(textBox))
+            {
+                e.Handled = true;
+                textBox.Dispatcher.BeginInvoke(
+                    new Action(() =>
+                    {
+                        Keyboard.Focus(textBox);
+                    }),
+                    System.Windows.Threading.DispatcherPriority.Input);
+            }
         }
     }
 }

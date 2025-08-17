@@ -53,6 +53,7 @@ public class PlotViewModel : ViewModelBase
         {
             Graphs.Plot.Remove(_plotScatters[key]);
             _plotScatters.Remove(key);
+            Graphs.Refresh();
         }
     }
 
@@ -113,7 +114,6 @@ public class PlotViewModel : ViewModelBase
 
         model.PropertyChanged += (sender, args) =>
         {
-            RemovePlotScatter(typeof(CosViewModel));
             PlotCos(model);
         };
 
@@ -122,6 +122,13 @@ public class PlotViewModel : ViewModelBase
 
     private void PlotCos(CosViewModel model)
     {
+        RemovePlotScatter(typeof(CosViewModel));
+
+        if (model.HasErrors)
+        {
+            return;
+        }
+
         var source = FuncGenerator.Sin(
             frequency: model.Frequency,
             duration: model.Duration,

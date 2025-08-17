@@ -48,16 +48,13 @@ public class CosViewModel : ValidationViewModelBase
                 if (value > _defaultSettings.AmplitudeMax)
                 {
                     AddError($"Value can't be more than {_defaultSettings.AmplitudeMax}");
-                    _amplitude = _defaultSettings.AmplitudeMax;
                 }
                 else if (value < _defaultSettings.AmplitudeMin)
                 {
                     AddError($"Value can't be less than {_defaultSettings.AmplitudeMin}");
-                    _amplitude = _defaultSettings.AmplitudeMin;
                 }
-                else
-                    _amplitude = value;
 
+                _amplitude = value;
                 OnPropertyChanged(nameof(Amplitude));
             }
         }
@@ -81,18 +78,13 @@ public class CosViewModel : ValidationViewModelBase
                 if (value > _defaultSettings.PhaseMax)
                 {
                     AddError($"Value can't be more than {_defaultSettings.PhaseMax}");
-                    _phase = _defaultSettings.PhaseMax;
                 }
                 else if (value < _defaultSettings.PhaseMin)
                 {
                     AddError($"Value can't be less than {_defaultSettings.PhaseMin}");
-                    _phase = _defaultSettings.PhaseMin;
-                }
-                else
-                {
-                    _phase = value;
                 }
 
+                _phase = value;
                 OnPropertyChanged(nameof(Phase));
             }
         }
@@ -109,7 +101,7 @@ public class CosViewModel : ValidationViewModelBase
         get => _frequncy;
         set
         {
-            if (Math.Abs(_frequncy - value) > 0.00001)
+            if (Math.Abs(_frequncy - value) > 0.00001 || HasErrors)
             {
                 // Validate frequency
                 ClearErrors();
@@ -117,16 +109,13 @@ public class CosViewModel : ValidationViewModelBase
                 if (value <= 0)
                 {
                     AddError($"Value can't be less or equals 0kHz");
-                    _frequncy = _defaultSettings.FrequencyDefault;
                 }
                 else if (value > _defaultSettings.FrequencyMax)
                 {
                     AddError($"Value can't be more then {_defaultSettings.FrequencyMax}kHz");
-                    _frequncy = _defaultSettings.FrequencyMax;
                 }
-                else
-                    _frequncy = value;
 
+                _frequncy = value;
                 OnPropertyChanged(nameof(Frequency));
             }
         }
@@ -150,16 +139,10 @@ public class CosViewModel : ValidationViewModelBase
                 if (value <= _defaultSettings.DurationMin)
                 {
                     AddError($"Value can't be less or equals {_defaultSettings.DurationMin}");
-                    _duration = _defaultSettings.DurationMin;
                 }
                 else if (value > _defaultSettings.DurationMax)
                 {
                     AddError($"Value can't be more than {_defaultSettings.DurationMax} sec");
-                    _duration = _defaultSettings.DurationMax;
-                }
-                else
-                {
-                    _duration = value;
                 }
 
                 _duration = value;
