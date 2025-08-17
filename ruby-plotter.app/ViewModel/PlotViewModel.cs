@@ -157,7 +157,6 @@ public class PlotViewModel : ViewModelBase
 
         model.PropertyChanged += (sender, args) =>
         {
-            RemovePlotScatter(typeof(SincViewModel));
             PlotSinc(model);
         };
         PlotSinc(model);
@@ -165,6 +164,13 @@ public class PlotViewModel : ViewModelBase
 
     private void PlotSinc(SincViewModel model)
     {
+        RemovePlotScatter(typeof(SincViewModel));
+
+        if (model.HasErrors)
+        {
+            return;
+        }
+
         var source = FuncGenerator.SinCardinal(
             frequency: model.Frequency,
             xEnd: model.xMax,

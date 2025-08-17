@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ruby_plotter.app.Views"
              xmlns:handlers="clr-namespace:ruby_plotter.app.Contracts.Handlers"
+             xmlns:converters="clr-namespace:ruby_plotter.app.Contracts.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:CustomTextDoubleConverter x:Key="CustomTextDoubleConverter"/>
+        <converters:CustomTextIntConverter x:Key="CustomTextIntConverter"/>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -42,7 +47,12 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding Frequency, Mode=TwoWay, ValidatesOnDataErrors=True}"
+            Text="{
+                Binding Frequency, 
+                Mode=TwoWay, 
+                ValidatesOnExceptions=False, 
+                UpdateSourceTrigger=PropertyChanged, 
+                Converter={StaticResource CustomTextDoubleConverter}}"
             handlers:EnterKeyHandler.IsEnabled="True"
             handlers:FocusOnValidationErrorHandler.IsEnabled="True"
             KeyboardNavigation.TabIndex="0"/>
@@ -58,7 +68,12 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="2"
             Grid.Column="1"
-            Text="{Binding xMin, Mode=TwoWay, ValidatesOnDataErrors=True}"
+            Text="{
+                Binding xMin, 
+                Mode=TwoWay, 
+                ValidatesOnExceptions=False, 
+                UpdateSourceTrigger=PropertyChanged, 
+                Converter={StaticResource CustomTextDoubleConverter}}"
             handlers:EnterKeyHandler.IsEnabled="True"
             handlers:FocusOnValidationErrorHandler.IsEnabled="True"
             KeyboardNavigation.TabIndex="1"/>   
@@ -74,7 +89,12 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="3"
             Grid.Column="1"
-            Text="{Binding xMax, Mode=TwoWay, ValidatesOnDataErrors=True}"
+            Text="{
+                Binding xMax, 
+                Mode=TwoWay, 
+                ValidatesOnExceptions=False, 
+                UpdateSourceTrigger=PropertyChanged, 
+                Converter={StaticResource CustomTextDoubleConverter}}"
             handlers:EnterKeyHandler.IsEnabled="True"
             handlers:FocusOnValidationErrorHandler.IsEnabled="True"
             KeyboardNavigation.TabIndex="2"/>   

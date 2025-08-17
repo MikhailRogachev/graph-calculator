@@ -47,16 +47,13 @@ public class SincViewModel : ValidationViewModelBase
                 if (value <= _sincDefaultSettings.FrequencyMin)
                 {
                     AddError($"Value can't be less or equals {_sincDefaultSettings.FrequencyMin}");
-                    _frequncy = _sincDefaultSettings.FrequencyMin;
                 }
                 else if (value > _sincDefaultSettings.FrequencyMax)
                 {
                     AddError($"Value can't be more then {_sincDefaultSettings.FrequencyMax}kHz");
-                    _frequncy = _sincDefaultSettings.FrequencyMax;
                 }
-                else
-                    _frequncy = value;
 
+                _frequncy = value;
                 OnPropertyChanged(nameof(Frequency));
             }
         }
@@ -85,9 +82,8 @@ public class SincViewModel : ValidationViewModelBase
                 {
                     AddError("xMin can't be euals or greater than xMax");
                 }
-                else
-                    _xmin = value;
 
+                _xmin = value;
                 OnPropertyChanged(nameof(xMin));
             }
         }
@@ -116,12 +112,8 @@ public class SincViewModel : ValidationViewModelBase
                 {
                     AddError("Value can't be less than xMin");
                 }
-                else
-                {
-                    _xmax = value;
 
-                }
-
+                _xmax = value;
                 OnPropertyChanged(nameof(xMax));
             }
         }
