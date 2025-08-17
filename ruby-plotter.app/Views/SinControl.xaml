@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ruby_plotter.app.Views"
              xmlns:converters="clr-namespace:ruby_plotter.app.Contracts.Converters"
+             xmlns:handlers="clr-namespace:ruby_plotter.app.Contracts.Handlers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -44,18 +45,13 @@
             ToolTip="Signal Frequency (kHz)"/>
 
         <TextBox x:Name="FrequencyTextBox" 
-                 Style="{StaticResource InputTextBox}"
-                 Grid.Row="1"
-                 Grid.Column="1"
-                 Text="{Binding Frequency, Mode=TwoWay, Converter={StaticResource CustomTextDoubleConverter}}"
-                 ToolTip="Signal Frequency (kHz)">
-            <TextBox.InputBindings>
-                <KeyBinding 
-                    Key="Enter" 
-                    Command="{Binding RefreshCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}}"/>
-            </TextBox.InputBindings>
-        </TextBox>
+            Style="{StaticResource InputTextBox}"
+            Grid.Row="1"
+            Grid.Column="1"
+            Text="{Binding Frequency, Mode=TwoWay, ValidatesOnDataErrors=False}"
+            handlers:EnterKeyHandler.IsEnabled="True"
+            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
+            KeyboardNavigation.TabIndex="0"/>
 
         <TextBlock
             Style="{StaticResource InputTextBlock}"
@@ -68,15 +64,10 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="2"
             Grid.Column="1"            
-            Text="{Binding Duration, Mode=TwoWay }"
-            ToolTip="Signal Duration (in seconds)">
-            <TextBox.InputBindings>
-                <KeyBinding 
-                    Key="Enter" 
-                    Command="{Binding RefreshCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}}"/>
-            </TextBox.InputBindings>
-        </TextBox>
+            Text="{Binding Duration, Mode=TwoWay, ValidatesOnDataErrors=False}"
+            handlers:EnterKeyHandler.IsEnabled="True"
+            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
+            KeyboardNavigation.TabIndex="1"/>
 
         <TextBlock 
             Style="{StaticResource InputTextBlock}"
@@ -86,18 +77,13 @@
             ToolTip="Signal Amplitude"/>
 
         <TextBox x:Name="AmplitudeTextBox"
-                 Style="{StaticResource InputTextBox}"
-                 Grid.Row="3"
-                 Grid.Column="1"
-                 Text="{Binding Amplitude, Mode=TwoWay}"
-                 ToolTip="Signal Amplitude">
-            <TextBox.InputBindings>
-                <KeyBinding 
-                    Key="Enter" 
-                    Command="{Binding RefreshCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}}"/>
-            </TextBox.InputBindings>
-        </TextBox>        
+            Style="{StaticResource InputTextBox}"
+            Grid.Row="3"
+            Grid.Column="1"
+            Text="{Binding Amplitude, Mode=TwoWay, ValidatesOnDataErrors=False}"
+            handlers:EnterKeyHandler.IsEnabled="True"
+            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
+            KeyboardNavigation.TabIndex="2"/>   
 
         <TextBlock
             Style="{StaticResource InputTextBlock}"
@@ -110,14 +96,9 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="4"
             Grid.Column="2"
-            Text="{Binding Phase, Mode=TwoWay, Converter={StaticResource CustomTextIntConverter}}"
-            ToolTip="Signal Initial Phase (Degree)">
-            <TextBox.InputBindings>
-                <KeyBinding 
-                    Key="Enter" 
-                    Command="{Binding RefreshCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}}"/>
-            </TextBox.InputBindings>
-        </TextBox>
+            Text="{Binding Phase, Mode=TwoWay, ValidatesOnDataErrors=False}"
+            handlers:EnterKeyHandler.IsEnabled="True"
+            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
+            KeyboardNavigation.TabIndex="3"/>   
     </Grid>
 </UserControl>
