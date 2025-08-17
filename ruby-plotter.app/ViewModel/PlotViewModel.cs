@@ -82,7 +82,6 @@ public class PlotViewModel : ViewModelBase
 
         model.PropertyChanged += (sender, args) =>
         {
-            RemovePlotScatter(typeof(SinViewModel));
             PlotSin(model);
         };
 
@@ -91,6 +90,13 @@ public class PlotViewModel : ViewModelBase
 
     private void PlotSin(SinViewModel model)
     {
+        RemovePlotScatter(typeof(SinViewModel));
+
+        if (model == null)
+        {
+            return;
+        }
+
         var source = FuncGenerator.Sin(
             frequency: model.Frequency,
             duration: model.Duration,
@@ -99,7 +105,7 @@ public class PlotViewModel : ViewModelBase
             framerate: _settings.Framerate
             );
 
-        var scatter = GrapfPlotting(source.Ts, source.Ys, "sin", Colors.Salmon);
+        var scatter = GrapfPlotting(source.Ts, source.Ys, "Sine", Colors.Salmon);
         AddPlotScatter(typeof(SinViewModel), scatter);
     }
 
@@ -137,7 +143,7 @@ public class PlotViewModel : ViewModelBase
             framerate: _settings.Framerate
             );
 
-        var scatter = GrapfPlotting(source.Ts, source.Ys, "cos", Colors.Green);
+        var scatter = GrapfPlotting(source.Ts, source.Ys, "Cosine", Colors.Green);
         AddPlotScatter(typeof(CosViewModel), scatter);
     }
 

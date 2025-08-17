@@ -48,10 +48,15 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding Frequency, Mode=TwoWay, ValidatesOnDataErrors=False}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="0"/>
+            Text="{
+                 Binding Frequency, 
+                 Mode=TwoWay, 
+                 ValidatesOnExceptions=False, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={StaticResource CustomTextDoubleConverter}}"
+         handlers:EnterKeyHandler.IsEnabled="True"
+         handlers:FocusOnValidationErrorHandler.IsEnabled="True"
+         KeyboardNavigation.TabIndex="0"/>
 
         <TextBlock
             Style="{StaticResource InputTextBlock}"
@@ -64,7 +69,12 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="2"
             Grid.Column="1"            
-            Text="{Binding Duration, Mode=TwoWay, ValidatesOnDataErrors=False}"
+            Text="{
+                 Binding Duration, 
+                 Mode=TwoWay, 
+                 ValidatesOnExceptions=False, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={StaticResource CustomTextDoubleConverter}}"
             handlers:EnterKeyHandler.IsEnabled="True"
             handlers:FocusOnValidationErrorHandler.IsEnabled="True"
             KeyboardNavigation.TabIndex="1"/>
@@ -80,7 +90,12 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="3"
             Grid.Column="1"
-            Text="{Binding Amplitude, Mode=TwoWay, ValidatesOnDataErrors=False}"
+            Text="{
+                 Binding Amplitude, 
+                 Mode=TwoWay, 
+                 ValidatesOnExceptions=False, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={StaticResource CustomTextDoubleConverter}}"
             handlers:EnterKeyHandler.IsEnabled="True"
             handlers:FocusOnValidationErrorHandler.IsEnabled="True"
             KeyboardNavigation.TabIndex="2"/>   
@@ -96,7 +111,12 @@
             Style="{StaticResource InputTextBox}"
             Grid.Row="4"
             Grid.Column="2"
-            Text="{Binding Phase, Mode=TwoWay, ValidatesOnDataErrors=False}"
+             Text="{
+                 Binding Phase, 
+                 Mode=TwoWay, 
+                 ValidatesOnExceptions=False, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={StaticResource CustomTextIntConverter}}"
             handlers:EnterKeyHandler.IsEnabled="True"
             handlers:FocusOnValidationErrorHandler.IsEnabled="True"
             KeyboardNavigation.TabIndex="3"/>   
