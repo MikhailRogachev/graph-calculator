@@ -146,7 +146,7 @@ public class GraphListViewModel : ViewModelBase
                 {
                     @set = new SinCosParameter
                     {
-                        Frequency = 0.05,
+                        Frequency = 50,
                         FrequencyMeasureId = 1,
                         Phase = 0,
                         Amplitude = 1,
@@ -200,7 +200,8 @@ public class GraphListViewModel : ViewModelBase
                 {
                     @set = new SinCosParameter
                     {
-                        Frequency = 0.05,
+                        Frequency = 50,
+                        FrequencyMeasureId = 1,
                         Phase = 0,
                         Amplitude = 1,
                         Duration = 2.0
@@ -217,6 +218,7 @@ public class GraphListViewModel : ViewModelBase
                 var @set = new SinCosParameter
                 {
                     Frequency = CosViewModel.Frequency,
+                    FrequencyMeasureId = CosViewModel.SelectedFrequencyMeasure.Id,
                     Phase = CosViewModel.Phase,
                     Amplitude = CosViewModel.Amplitude,
                     Duration = CosViewModel.Duration
@@ -251,7 +253,8 @@ public class GraphListViewModel : ViewModelBase
                 {
                     @set = new SincParameter
                     {
-                        Frequency = 0.05,
+                        Frequency = 20,
+                        FrequencyMeasureId = 1,
                         xMax = 2.0,
                         xMin = -2.0
                     };
@@ -267,6 +270,7 @@ public class GraphListViewModel : ViewModelBase
                 var @set = new SincParameter
                 {
                     Frequency = SincViewModel.Frequency,
+                    FrequencyMeasureId = SincViewModel.SelectedFrequencyMeasure.Id,
                     xMax = SincViewModel.xMax,
                     xMin = SincViewModel.xMin
                 };

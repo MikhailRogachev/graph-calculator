@@ -50,7 +50,7 @@ public static class FuncGenerator
     /// </summary>
     /// <remarks>The sinc function is defined as <c>sin(π * frequency * t) / (π * frequency * t)</c>, where
     /// <c>t</c> is the time. If <c>t</c> is 0, the function value is defined as 1 to avoid division by zero.</remarks>
-    /// <param name="frequency">The frequency of the sinc function in kHz. Defaults to 0.05 kHz.</param>
+    /// <param name="frequency">The frequency of the sinc function in Hz. Defaults to 0.05 kHz.</param>
     /// <param name="xStart">The starting value of the range for the independent variable (time). Defaults to 0.</param>
     /// <param name="xEnd">The ending value of the range for the independent variable (time). Defaults to 1.</param>
     /// <param name="framerate">The number of samples per second used to calculate the function. Defaults to 24600.</param>
@@ -58,12 +58,12 @@ public static class FuncGenerator
     /// sinc function.</description></item> <item><description><c>Ts</c>: The corresponding time values for the
     /// calculated sinc function values.</description></item> </list></returns>
     public static (double[] Ys, double[] Ts) SinCardinal(
-        double frequency = 0.05,
+        double frequency = 20,
         double xStart = 0,
         double xEnd = 1,
         double framerate = 24600)
     {
-        var freqKhz = frequency * 1000; // Convert frequency to Hz
+        var freqKhz = frequency;
         var duration = xEnd + (xStart < 0 ? xStart * -1 : xStart);
         int count = Convert.ToInt32(duration * framerate);
 

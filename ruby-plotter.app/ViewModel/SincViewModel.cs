@@ -21,6 +21,8 @@ public class SincViewModel : ValidationViewModelBase
     public SincViewModel(SincParameter parameter, SincDefaultSettings sincDefaultSettings)
     {
         _frequncy = parameter.Frequency;
+        _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
+            parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _xmin = parameter.xMin;
         _xmax = parameter.xMax;
         _sincDefaultSettings = sincDefaultSettings;

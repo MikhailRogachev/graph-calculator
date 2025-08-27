@@ -97,11 +97,8 @@ public class PlotViewModel : ViewModelBase
             return;
         }
 
-        //get frequency measure koeff
-        double koeff = FrequencyMeasures.First(p => p.Id == model.SelectedFrequencyMeasure.Id).Koeff;
-
         var source = FuncGenerator.Sin(
-            frequency: model.Frequency * koeff,
+            frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
             duration: model.Duration,
             amplitude: model.Amplitude,
             phase: model.Phase,
@@ -139,7 +136,7 @@ public class PlotViewModel : ViewModelBase
         }
 
         var source = FuncGenerator.Sin(
-            frequency: model.Frequency,
+            frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
             duration: model.Duration,
             amplitude: model.Amplitude,
             phase: model.Phase + 90,
@@ -175,7 +172,7 @@ public class PlotViewModel : ViewModelBase
         }
 
         var source = FuncGenerator.SinCardinal(
-            frequency: model.Frequency,
+            frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
             xEnd: model.xMax,
             xStart: model.xMin,
             framerate: _settings.Framerate
@@ -222,4 +219,10 @@ public class PlotViewModel : ViewModelBase
     }
 
     #endregion
+
+    private double getFrequencyKoeff(int index)
+    {
+        //get frequency measure koeff
+        return FrequencyMeasures.First(p => p.Id == index).Koeff;
+    }
 }

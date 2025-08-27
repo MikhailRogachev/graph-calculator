@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ruby_plotter.app.Views"
              xmlns:handlers="clr-namespace:ruby_plotter.app.Contracts.Handlers"
              xmlns:converters="clr-namespace:ruby_plotter.app.Contracts.Converters"
+             xmlns:usercontrols="clr-namespace:ruby_plotter.app.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -36,26 +37,9 @@
                FontWeight="Bold" />
         </StackPanel>
 
-        <TextBlock 
-            Style="{StaticResource InputTextBlock}"
-            Grid.Row="1"
-            Grid.Column="0"
-            Text="Frequency (Hz):"
-            ToolTip="Signal Frequency (Hz)"/>
-
-        <TextBox x:Name="FrequencyTextBox"
-            Style="{StaticResource InputTextBox}"
-            Grid.Row="1"
-            Grid.Column="1"
-            Text="{
-                Binding Frequency, 
-                Mode=TwoWay, 
-                ValidatesOnExceptions=False, 
-                UpdateSourceTrigger=PropertyChanged, 
-                Converter={StaticResource CustomTextDoubleConverter}}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="0"/>
+        <usercontrols:FrequencySetting
+                Grid.Row="1"
+                Grid.ColumnSpan="2" />
 
         <TextBlock 
             Style="{StaticResource InputTextBlock}"
