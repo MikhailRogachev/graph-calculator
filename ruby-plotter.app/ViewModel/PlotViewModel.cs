@@ -97,8 +97,11 @@ public class PlotViewModel : ViewModelBase
             return;
         }
 
+        //get frequency measure koeff
+        double koeff = FrequencyMeasures.First(p => p.Id == model.SelectedFrequencyMeasure.Id).Koeff;
+
         var source = FuncGenerator.Sin(
-            frequency: model.Frequency,
+            frequency: model.Frequency * koeff,
             duration: model.Duration,
             amplitude: model.Amplitude,
             phase: model.Phase,

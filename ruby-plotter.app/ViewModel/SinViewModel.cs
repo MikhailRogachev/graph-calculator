@@ -12,7 +12,7 @@ public class SinViewModel : ValidationViewModelBase
 {
     private double _amplitude;
     private int _phase;
-    private double _frequncy;
+    private double _frequency;
     private double _duration;
     private readonly SinDefaultSettings _defaultSettings;
 
@@ -20,7 +20,9 @@ public class SinViewModel : ValidationViewModelBase
     {
         _amplitude = parameter.Amplitude;
         _phase = parameter.Phase;
-        _frequncy = parameter.Frequency;
+        _frequency = parameter.Frequency;
+        _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
+            parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _duration = parameter.Duration;
         _defaultSettings = sinDefaultSettings;
 
@@ -98,10 +100,10 @@ public class SinViewModel : ValidationViewModelBase
     /// </remarks>
     public double Frequency
     {
-        get => _frequncy;
+        get => _frequency;
         set
         {
-            if (Math.Abs(_frequncy - value) > 0.00001)
+            if (Math.Abs(_frequency - value) > 0.00001)
             {
                 // Validate frequency
                 ClearErrors();
@@ -115,7 +117,7 @@ public class SinViewModel : ValidationViewModelBase
                     AddError($"Value can't be greater then {_defaultSettings.FrequencyMax}kHz");
                 }
 
-                _frequncy = value;
+                _frequency = value;
                 OnPropertyChanged(nameof(Frequency));
             }
         }

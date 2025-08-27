@@ -147,6 +147,7 @@ public class GraphListViewModel : ViewModelBase
                     @set = new SinCosParameter
                     {
                         Frequency = 0.05,
+                        FrequencyMeasureId = 1,
                         Phase = 0,
                         Amplitude = 1,
                         Duration = 2.0
@@ -163,6 +164,7 @@ public class GraphListViewModel : ViewModelBase
                 var @set = new SinCosParameter
                 {
                     Frequency = SinViewModel.Frequency,
+                    FrequencyMeasureId = SinViewModel.SelectedFrequencyMeasure.Id,
                     Phase = SinViewModel.Phase,
                     Amplitude = SinViewModel.Amplitude,
                     Duration = SinViewModel.Duration

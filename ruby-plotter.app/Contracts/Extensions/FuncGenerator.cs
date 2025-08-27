@@ -14,7 +14,7 @@ public static class FuncGenerator
     /// <remarks>The method calculates the sine wave using the formula: <c>y(t) = amplitude * sin(2π *
     /// frequency * t + phase)</c>, where <c>t</c> is the time in seconds. The frequency is converted from kHz to Hz,
     /// and the phase is converted from degrees to radians.</remarks>
-    /// <param name="frequency">The frequency of the sine wave in kHz. Defaults to 0.05 kHz.</param>
+    /// <param name="frequency">The frequency of the sine wave in Hz. Defaults to50 Hz.</param>
     /// <param name="duration">The duration of the sine wave in seconds. Defaults to 1 second.</param>
     /// <param name="amplitude">The amplitude of the sine wave. Defaults to 1.</param>
     /// <param name="phase">The phase offset of the sine wave in degrees. Defaults to 0 degrees.</param>
@@ -23,14 +23,14 @@ public static class FuncGenerator
     /// values.</description></item> <item><description><c>Ts</c>: The corresponding time values for each
     /// sample.</description></item> </list></returns>
     public static (double[] Ys, double[] Ts) Sin(
-        double frequency = 0.05,
+        double frequency = 50,
         double duration = 1,
         double amplitude = 1,
         int phase = 0,
         double framerate = 24600)
     {
         var phaseRad = phase * Math.PI / 180;
-        var freqKhz = frequency * 1000; // Convert frequency to Hz
+        var freqKhz = frequency;
         int count = Convert.ToInt32(duration * framerate);
 
         double[] ts = new double[count];
