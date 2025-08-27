@@ -12,7 +12,7 @@ public class SinViewModel : ValidationViewModelBase
 {
     private double _amplitude;
     private int _phase;
-    private double _frequncy;
+    private double _frequency;
     private double _duration;
     private readonly SinDefaultSettings _defaultSettings;
 
@@ -20,7 +20,9 @@ public class SinViewModel : ValidationViewModelBase
     {
         _amplitude = parameter.Amplitude;
         _phase = parameter.Phase;
-        _frequncy = parameter.Frequency;
+        _frequency = parameter.Frequency;
+        _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
+            parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _duration = parameter.Duration;
         _defaultSettings = sinDefaultSettings;
 
@@ -94,28 +96,28 @@ public class SinViewModel : ValidationViewModelBase
     /// Gets or sets the Frequency of the Sine wave.
     /// </summary>
     /// <remarks>
-    ///     The value of the Frequency is in kHz.
+    ///     The value of the Frequency is in Hz.
     /// </remarks>
     public double Frequency
     {
-        get => _frequncy;
+        get => _frequency;
         set
         {
-            if (Math.Abs(_frequncy - value) > 0.00001)
+            if (Math.Abs(_frequency - value) > 0.00001)
             {
                 // Validate frequency
                 ClearErrors();
 
                 if (value <= _defaultSettings.FrequencyMin)
                 {
-                    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin}kHz");
+                    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin} Hz");
                 }
                 else if (value > _defaultSettings.FrequencyMax)
                 {
-                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax}kHz");
+                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax} Hz");
                 }
 
-                _frequncy = value;
+                _frequency = value;
                 OnPropertyChanged(nameof(Frequency));
             }
         }

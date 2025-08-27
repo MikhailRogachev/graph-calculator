@@ -21,6 +21,8 @@ public class SincViewModel : ValidationViewModelBase
     public SincViewModel(SincParameter parameter, SincDefaultSettings sincDefaultSettings)
     {
         _frequncy = parameter.Frequency;
+        _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
+            parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _xmin = parameter.xMin;
         _xmax = parameter.xMax;
         _sincDefaultSettings = sincDefaultSettings;
@@ -32,7 +34,7 @@ public class SincViewModel : ValidationViewModelBase
     /// Gets or sets the Frequency of the Sine wave.
     /// </summary>
     /// <remarks>
-    ///     The value of the Phase is in kHz.
+    ///     The value of the Phase is in Hz.
     /// </remarks>
     public double Frequency
     {
@@ -50,7 +52,7 @@ public class SincViewModel : ValidationViewModelBase
                 }
                 else if (value > _sincDefaultSettings.FrequencyMax)
                 {
-                    AddError($"Value can't be more then {_sincDefaultSettings.FrequencyMax}kHz");
+                    AddError($"Value can't be more then {_sincDefaultSettings.FrequencyMax} Hz");
                 }
 
                 _frequncy = value;

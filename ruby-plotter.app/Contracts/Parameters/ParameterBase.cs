@@ -6,4 +6,5 @@
 public class ParameterBase
 {
     public double Frequency { get; set; }
+    public int FrequencyMeasureId { get; set; }
 }

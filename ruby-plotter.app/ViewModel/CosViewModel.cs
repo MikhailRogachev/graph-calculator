@@ -18,9 +18,11 @@ public class CosViewModel : ValidationViewModelBase
 
     public CosViewModel(SinCosParameter parameter, CosDefaultSettings cosDefaultSettings)
     {
-        _amplitude = cosDefaultSettings.AmplitudeDefault;
+        _amplitude = parameter.Amplitude;
         _phase = parameter.Phase;
-        _frequncy = cosDefaultSettings.FrequencyDefault;
+        _frequncy = parameter.Frequency;
+        _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
+            parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _duration = parameter.Duration;
         _defaultSettings = cosDefaultSettings;
 
@@ -94,7 +96,7 @@ public class CosViewModel : ValidationViewModelBase
     /// Gets or sets the Frequency of the Cos wave.
     /// </summary>
     /// <remarks>
-    ///     The value of the Frequency is in kHz.
+    ///     The value of the Frequency is in Hz.
     /// </remarks>
     public double Frequency
     {
@@ -108,11 +110,11 @@ public class CosViewModel : ValidationViewModelBase
 
                 if (value <= 0)
                 {
-                    AddError($"Value can't be less or equals 0kHz");
+                    AddError($"Value can't be less or equals 0 Hz");
                 }
                 else if (value > _defaultSettings.FrequencyMax)
                 {
-                    AddError($"Value can't be more then {_defaultSettings.FrequencyMax}kHz");
+                    AddError($"Value can't be more then {_defaultSettings.FrequencyMax} Hz");
                 }
 
                 _frequncy = value;
