@@ -41,8 +41,8 @@
             Style="{StaticResource InputTextBlock}"
             Grid.Row="1"
             Grid.Column="0"
-            Text="Frequency (kHz):"
-            ToolTip="Signal Frequency (kHz)"/>
+            Text="Frequency (Hz):"
+            ToolTip="Signal Frequency (Hz)"/>
 
         <TextBox x:Name="FrequencyTextBox"
             Style="{StaticResource InputTextBox}"

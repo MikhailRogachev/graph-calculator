@@ -96,7 +96,7 @@ public class SinViewModel : ValidationViewModelBase
     /// Gets or sets the Frequency of the Sine wave.
     /// </summary>
     /// <remarks>
-    ///     The value of the Frequency is in kHz.
+    ///     The value of the Frequency is in Hz.
     /// </remarks>
     public double Frequency
     {
@@ -110,11 +110,11 @@ public class SinViewModel : ValidationViewModelBase
 
                 if (value <= _defaultSettings.FrequencyMin)
                 {
-                    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin}kHz");
+                    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin} Hz");
                 }
                 else if (value > _defaultSettings.FrequencyMax)
                 {
-                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax}kHz");
+                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax} Hz");
                 }
 
                 _frequency = value;
