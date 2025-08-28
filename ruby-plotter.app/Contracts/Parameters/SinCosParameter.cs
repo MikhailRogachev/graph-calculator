@@ -6,6 +6,7 @@
 public class SinCosParameter : ParameterBase
 {
     public double Amplitude { get; set; }
-    public int Phase { get; set; }
+    public double Phase { get; set; }
+    public int PhaseMeasureId { get; set; }
     public double Duration { get; set; }
 }

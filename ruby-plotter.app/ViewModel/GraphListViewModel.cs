@@ -149,6 +149,7 @@ public class GraphListViewModel : ViewModelBase
                         Frequency = 50,
                         FrequencyMeasureId = 1,
                         Phase = 0,
+                        PhaseMeasureId = 1,
                         Amplitude = 1,
                         Duration = 2.0
                     };
@@ -166,6 +167,7 @@ public class GraphListViewModel : ViewModelBase
                     Frequency = SinViewModel.Frequency,
                     FrequencyMeasureId = SinViewModel.SelectedFrequencyMeasure.Id,
                     Phase = SinViewModel.Phase,
+                    PhaseMeasureId = SinViewModel.SelectedPhaseMeasure.Id,
                     Amplitude = SinViewModel.Amplitude,
                     Duration = SinViewModel.Duration
                 };

@@ -11,7 +11,7 @@ namespace ruby_plotter.app.ViewModel;
 public class SinViewModel : ValidationViewModelBase
 {
     private double _amplitude;
-    private int _phase;
+    private double _phase;
     private double _frequency;
     private double _duration;
     private readonly SinDefaultSettings _defaultSettings;
@@ -23,6 +23,8 @@ public class SinViewModel : ValidationViewModelBase
         _frequency = parameter.Frequency;
         _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
             parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
+        _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
+            parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
         _defaultSettings = sinDefaultSettings;
 
@@ -44,18 +46,6 @@ public class SinViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_amplitude - value) > 0.00001)
             {
-                // Validate amplitude
-                ClearErrors();
-
-                if (value > _defaultSettings.AmplitudeMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.AmplitudeMax}");
-                }
-                else if (value < _defaultSettings.AmplitudeMin)
-                {
-                    AddError($"Value can't be less than {_defaultSettings.AmplitudeMin}");
-                }
-
                 _amplitude = value;
                 OnPropertyChanged(nameof(Amplitude));
             }
@@ -68,29 +58,41 @@ public class SinViewModel : ValidationViewModelBase
     /// <remarks>
     ///     The value of the Phase is in degrees.
     /// </remarks>
-    public int Phase
+    public double Phase
     {
-        get => _phase;
+        get
+        {
+            return _phase * PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
+        }
         set
         {
-            if (_phase != value)
+            double _valueDegree = value / PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
+
+            if (_phase != _valueDegree)
             {
-                ClearErrors();
-
-                if (value > _defaultSettings.PhaseMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.PhaseMax}");
-                }
-                else if (value < _defaultSettings.PhaseMin)
-                {
-                    AddError($"Value can't be less than {_defaultSettings.PhaseMin}");
-                }
-
-                _phase = value;
+                _phase = _valueDegree;
                 OnPropertyChanged(nameof(Phase));
             }
         }
     }
+
+    public override MeasureItem SelectedPhaseMeasure
+    {
+        get
+        {
+            return base.SelectedPhaseMeasure;
+        }
+        set
+        {
+            if (value.Id != _phaseMeasureId)
+            {
+                base.SelectedPhaseMeasure = value;
+                OnPropertyChanged(nameof(SelectedPhaseMeasure));
+                OnPropertyChanged(nameof(Phase));
+            }
+        }
+    }
+    public double PhaseDegrees => _phase;
 
     /// <summary>
     /// Gets or sets the Frequency of the Sine wave.
@@ -105,18 +107,6 @@ public class SinViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_frequency - value) > 0.00001)
             {
-                // Validate frequency
-                ClearErrors();
-
-                if (value <= _defaultSettings.FrequencyMin)
-                {
-                    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin} Hz");
-                }
-                else if (value > _defaultSettings.FrequencyMax)
-                {
-                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax} Hz");
-                }
-
                 _frequency = value;
                 OnPropertyChanged(nameof(Frequency));
             }
@@ -136,17 +126,6 @@ public class SinViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_duration - value) > 0.00001)
             {
-                ClearErrors();
-
-                if (value <= _defaultSettings.DurationMin)
-                {
-                    AddError($"Value can't be less or equals {_defaultSettings.DurationMin}");
-                }
-                else if (value > _defaultSettings.DurationMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.DurationMax} sec");
-                }
-
                 _duration = value;
                 OnPropertyChanged(nameof(Duration));
             }

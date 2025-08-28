@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruby-plotter.app", "ruby-plotter.app\ruby-plotter.app.csproj", "{427CD3CA-1328-4A01-904A-8AFC17C80968}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruby-plotter.tests", "ruby-plotter.tests\ruby-plotter.tests.csproj", "{7D706D00-D9CA-4D26-BE5B-2695D76A3073}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{427CD3CA-1328-4A01-904A-8AFC17C80968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{427CD3CA-1328-4A01-904A-8AFC17C80968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{427CD3CA-1328-4A01-904A-8AFC17C80968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D706D00-D9CA-4D26-BE5B-2695D76A3073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D706D00-D9CA-4D26-BE5B-2695D76A3073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D706D00-D9CA-4D26-BE5B-2695D76A3073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D706D00-D9CA-4D26-BE5B-2695D76A3073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

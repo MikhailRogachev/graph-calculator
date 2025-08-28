@@ -11,7 +11,7 @@ namespace ruby_plotter.app.ViewModel;
 public class CosViewModel : ValidationViewModelBase
 {
     private double _amplitude;
-    private int _phase;
+    private double _phase;
     private double _frequncy;
     private double _duration;
     private readonly CosDefaultSettings _defaultSettings;
@@ -23,6 +23,8 @@ public class CosViewModel : ValidationViewModelBase
         _frequncy = parameter.Frequency;
         _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
             parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
+        _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
+            parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
         _defaultSettings = cosDefaultSettings;
 
@@ -68,29 +70,41 @@ public class CosViewModel : ValidationViewModelBase
     /// <remarks>
     ///     The value of the Phase is in degrees.
     /// </remarks>
-    public int Phase
+    public double Phase
     {
-        get => _phase;
+        get
+        {
+            return _phase * PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
+        }
         set
         {
-            if (_phase != value)
+            double _valueDegree = value / PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
+
+            if (_phase != _valueDegree)
             {
-                ClearErrors();
-
-                if (value > _defaultSettings.PhaseMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.PhaseMax}");
-                }
-                else if (value < _defaultSettings.PhaseMin)
-                {
-                    AddError($"Value can't be less than {_defaultSettings.PhaseMin}");
-                }
-
-                _phase = value;
+                _phase = _valueDegree;
                 OnPropertyChanged(nameof(Phase));
             }
         }
     }
+
+    public override MeasureItem SelectedPhaseMeasure
+    {
+        get
+        {
+            return base.SelectedPhaseMeasure;
+        }
+        set
+        {
+            if (value.Id != _phaseMeasureId)
+            {
+                base.SelectedPhaseMeasure = value;
+                OnPropertyChanged(nameof(SelectedPhaseMeasure));
+                OnPropertyChanged(nameof(Phase));
+            }
+        }
+    }
+    public double PhaseDegrees => _phase;
 
     /// <summary>
     /// Gets or sets the Frequency of the Cos wave.
@@ -105,18 +119,6 @@ public class CosViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_frequncy - value) > 0.00001 || HasErrors)
             {
-                // Validate frequency
-                ClearErrors();
-
-                if (value <= 0)
-                {
-                    AddError($"Value can't be less or equals 0 Hz");
-                }
-                else if (value > _defaultSettings.FrequencyMax)
-                {
-                    AddError($"Value can't be more then {_defaultSettings.FrequencyMax} Hz");
-                }
-
                 _frequncy = value;
                 OnPropertyChanged(nameof(Frequency));
             }
@@ -136,16 +138,16 @@ public class CosViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_duration - value) > 0.00001)
             {
-                ClearErrors();
+                //ClearErrors();
 
-                if (value <= _defaultSettings.DurationMin)
-                {
-                    AddError($"Value can't be less or equals {_defaultSettings.DurationMin}");
-                }
-                else if (value > _defaultSettings.DurationMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.DurationMax} sec");
-                }
+                //if (value <= _defaultSettings.DurationMin)
+                //{
+                //    AddError($"Value can't be less or equals {_defaultSettings.DurationMin}");
+                //}
+                //else if (value > _defaultSettings.DurationMax)
+                //{
+                //    AddError($"Value can't be more than {_defaultSettings.DurationMax} sec");
+                //}
 
                 _duration = value;
                 OnPropertyChanged(nameof(Duration));

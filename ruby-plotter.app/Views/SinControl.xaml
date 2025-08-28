@@ -41,71 +41,18 @@
 
         <usercontrols:FrequencySetting
             Grid.Row="1"
-            Grid.ColumnSpan="2" /> 
+            Grid.ColumnSpan="2" />
 
-        <TextBlock
-            Style="{StaticResource InputTextBlock}"
-                 Grid.Row="2"
-                 Grid.Column="0" 
-                 Text="Duration (Sec):" 
-                 ToolTip="Signal Duration (in seconds)"/>
-
-        <TextBox x:Name="DurationTextBox"
-            Style="{StaticResource InputTextBox}"
+        <usercontrols:DurationSetting
             Grid.Row="2"
-            Grid.Column="1"            
-            Text="{
-                 Binding Duration, 
-                 Mode=TwoWay, 
-                 ValidatesOnExceptions=False, 
-                 UpdateSourceTrigger=PropertyChanged, 
-                 Converter={StaticResource CustomTextDoubleConverter}}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="1"/>
+            Grid.ColumnSpan="2" />
 
-        <TextBlock 
-            Style="{StaticResource InputTextBlock}"
+        <usercontrols:AmplitudeSetting
             Grid.Row="3"
-            Grid.Column="0"
-            Text="Amplitude:"
-            ToolTip="Signal Amplitude"/>
+            Grid.ColumnSpan="2" />
 
-        <TextBox x:Name="AmplitudeTextBox"
-            Style="{StaticResource InputTextBox}"
-            Grid.Row="3"
-            Grid.Column="1"
-            Text="{
-                 Binding Amplitude, 
-                 Mode=TwoWay, 
-                 ValidatesOnExceptions=False, 
-                 UpdateSourceTrigger=PropertyChanged, 
-                 Converter={StaticResource CustomTextDoubleConverter}}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="2"/>   
-
-        <TextBlock
-            Style="{StaticResource InputTextBlock}"
+        <usercontrols:PhaseSetting
             Grid.Row="4"
-            Grid.Column="0"
-            Text="Phase (Dig.):"
-            ToolTip="Signal Initial Phase (Degree)" />
-
-        <TextBox x:Name="PhaseTextBox"
-            Style="{StaticResource InputTextBox}"
-            Grid.Row="4"
-            Grid.Column="2"
-             Text="{
-                 Binding Phase, 
-                 Mode=TwoWay, 
-                 ValidatesOnExceptions=False, 
-                 UpdateSourceTrigger=PropertyChanged, 
-                 Converter={StaticResource CustomTextIntConverter}}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="3"/>
-
-        
+            Grid.ColumnSpan="2" />        
     </Grid>
 </UserControl>
