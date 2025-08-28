@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using ruby_plotter.app.Contracts.Commands;
 using ruby_plotter.app.Contracts.Enums;
+using ruby_plotter.app.Contracts.Extensions;
 using ruby_plotter.app.Contracts.Interfaces;
 using ruby_plotter.app.Contracts.Options;
 using ruby_plotter.app.Contracts.Parameters;
@@ -144,33 +145,17 @@ public class GraphListViewModel : ViewModelBase
                 var @set = _serializerService.DeserializeFromFile<SinCosParameter>(_sinParameterFileName);
                 if (@set == null)
                 {
-                    @set = new SinCosParameter
-                    {
-                        Frequency = 50,
-                        FrequencyMeasureId = 1,
-                        Phase = 0,
-                        PhaseMeasureId = 1,
-                        Amplitude = 1,
-                        Duration = 2.0
-                    };
+                    @set = ParameterExtensions.GetDefaultParameter();
                 }
 
-                SinViewModel = new SinViewModel(@set, _appSettings.SinDefaultSettings);
+                SinViewModel = new SinViewModel(@set);
             }
         }
         else
         {
             if (SinViewModel != null)
             {
-                var @set = new SinCosParameter
-                {
-                    Frequency = SinViewModel.Frequency,
-                    FrequencyMeasureId = SinViewModel.SelectedFrequencyMeasure.Id,
-                    Phase = SinViewModel.Phase,
-                    PhaseMeasureId = SinViewModel.SelectedPhaseMeasure.Id,
-                    Amplitude = SinViewModel.Amplitude,
-                    Duration = SinViewModel.Duration
-                };
+                var @set = SinViewModel.GetParameter();
 
                 _serializerService.SerializeToFile(@set, _sinParameterFileName);
                 SinViewModel = default(SinViewModel);
@@ -200,14 +185,7 @@ public class GraphListViewModel : ViewModelBase
                 var @set = _serializerService.DeserializeFromFile<SinCosParameter>(_cosParameterFileName);
                 if (@set == null)
                 {
-                    @set = new SinCosParameter
-                    {
-                        Frequency = 50,
-                        FrequencyMeasureId = 1,
-                        Phase = 0,
-                        Amplitude = 1,
-                        Duration = 2.0
-                    };
+                    @set = ParameterExtensions.GetDefaultParameter();
                 }
 
                 CosViewModel = new CosViewModel(@set, _appSettings.CosDefaultSettings);
@@ -217,14 +195,7 @@ public class GraphListViewModel : ViewModelBase
         {
             if (CosViewModel != null)
             {
-                var @set = new SinCosParameter
-                {
-                    Frequency = CosViewModel.Frequency,
-                    FrequencyMeasureId = CosViewModel.SelectedFrequencyMeasure.Id,
-                    Phase = CosViewModel.Phase,
-                    Amplitude = CosViewModel.Amplitude,
-                    Duration = CosViewModel.Duration
-                };
+                var @set = CosViewModel.GetParameter();
 
                 _serializerService.SerializeToFile(@set, _cosParameterFileName);
                 CosViewModel = default(CosViewModel);
@@ -253,13 +224,7 @@ public class GraphListViewModel : ViewModelBase
                 var @set = _serializerService.DeserializeFromFile<SincParameter>(_sincParameterFileName);
                 if (@set == null)
                 {
-                    @set = new SincParameter
-                    {
-                        Frequency = 20,
-                        FrequencyMeasureId = 1,
-                        xMax = 2.0,
-                        xMin = -2.0
-                    };
+                    @set = ParameterExtensions.GetDefaultSincParameter();
                 }
 
                 SincViewModel = new SincViewModel(@set, _appSettings.SincDefaultSettings);
@@ -269,13 +234,7 @@ public class GraphListViewModel : ViewModelBase
         {
             if (SincViewModel != null)
             {
-                var @set = new SincParameter
-                {
-                    Frequency = SincViewModel.Frequency,
-                    FrequencyMeasureId = SincViewModel.SelectedFrequencyMeasure.Id,
-                    xMax = SincViewModel.xMax,
-                    xMin = SincViewModel.xMin
-                };
+                var @set = SincViewModel.GetParameter();
 
                 _serializerService.SerializeToFile(@set, _sincParameterFileName);
                 SincViewModel = default(SincViewModel);

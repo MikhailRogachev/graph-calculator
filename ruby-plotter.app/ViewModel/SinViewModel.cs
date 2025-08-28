@@ -16,7 +16,7 @@ public class SinViewModel : ValidationViewModelBase
     private double _duration;
     private readonly SinDefaultSettings _defaultSettings;
 
-    public SinViewModel(SinCosParameter parameter, SinDefaultSettings sinDefaultSettings)
+    public SinViewModel(SinCosParameter parameter)
     {
         _amplitude = parameter.Amplitude;
         _phase = parameter.Phase;
@@ -26,7 +26,6 @@ public class SinViewModel : ValidationViewModelBase
         _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
             parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
-        _defaultSettings = sinDefaultSettings;
 
         RefreshCommand = new DelegateCommand(Refresh);
     }
