@@ -1,7 +1,4 @@
-﻿using ruby_plotter.app.Contracts.Commands;
-using ruby_plotter.app.Contracts.Options;
-using ruby_plotter.app.Contracts.Parameters;
-using System.Windows.Controls;
+﻿using ruby_plotter.app.Contracts.Parameters;
 
 namespace ruby_plotter.app.ViewModel;
 
@@ -14,7 +11,6 @@ public class SinViewModel : ValidationViewModelBase
     private double _phase;
     private double _frequency;
     private double _duration;
-    private readonly SinDefaultSettings _defaultSettings;
 
     public SinViewModel(SinCosParameter parameter)
     {
@@ -26,14 +22,7 @@ public class SinViewModel : ValidationViewModelBase
         _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
             parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
-
-        RefreshCommand = new DelegateCommand(Refresh);
     }
-
-    /// <summary>
-    /// This command is used to refresh the values of the Sine wave parameters.
-    /// </summary>
-    public DelegateCommand RefreshCommand { get; }
 
     /// <summary>
     /// Gets or sets the Amplitude of the Sine wave.
@@ -55,7 +44,10 @@ public class SinViewModel : ValidationViewModelBase
     /// Gets or sets the Phase of the Sine wave. 
     /// </summary>
     /// <remarks>
-    ///     The value of the Phase is in degrees.
+    ///     The value of the Phase can be Degrees or Radians, depends on 
+    ///     <see cref="SelectedPhaseMeasure">SelectedPhaseMeasure</see> value.
+    ///     
+    /// This propery is using to display value in the view.
     /// </remarks>
     public double Phase
     {
@@ -67,7 +59,7 @@ public class SinViewModel : ValidationViewModelBase
         {
             double _valueDegree = value / PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
 
-            if (_phase != _valueDegree)
+            if (Math.Abs(_phase - _valueDegree) > 0.00001)
             {
                 _phase = _valueDegree;
                 OnPropertyChanged(nameof(Phase));
@@ -75,6 +67,9 @@ public class SinViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// Get or set Selected Phase measure item.
+    /// </summary>
     public override MeasureItem SelectedPhaseMeasure
     {
         get
@@ -91,24 +86,63 @@ public class SinViewModel : ValidationViewModelBase
             }
         }
     }
+
+    /// <summary>
+    /// Get the current phase value in Degree.
+    /// </summary>
+    /// <remarks>
+    ///     This value is using for the function calculation only.
+    /// </remarks>
     public double PhaseDegrees => _phase;
 
     /// <summary>
     /// Gets or sets the Frequency of the Sine wave.
     /// </summary>
     /// <remarks>
-    ///     The value of the Frequency is in Hz.
+    ///     The value of the Frequency can be Hz of kHz depends on
+    ///     <see cref="SelectedFrequencyMeasure">SelectedFrequencyMeasure</see> value.
     /// </remarks>
     public double Frequency
     {
-        get => _frequency;
+        get => _frequency * FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
         set
         {
-            if (Math.Abs(_frequency - value) > 0.00001)
+            double _valueHz = value / FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
+
+            if (Math.Abs(_frequency - _valueHz) > 0.00001)
             {
-                _frequency = value;
+                _frequency = _valueHz;
                 OnPropertyChanged(nameof(Frequency));
             }
+        }
+    }
+
+    /// <summary>
+    /// Get the current Frequency value in Hz.
+    /// </summary>
+    /// <remarks>
+    ///     This value is using for the function calculation only.
+    /// </remarks>
+    public double FrequencyHz => _frequency;
+
+    /// <summary>
+    /// Get or set the current frequency measure.
+    /// </summary>
+    public override MeasureItem SelectedFrequencyMeasure
+    {
+        get
+        {
+            return base.SelectedFrequencyMeasure;
+        }
+        set
+        {
+            if (value.Id != _frequencyMeasureId)
+            {
+                base.SelectedFrequencyMeasure = value;
+                OnPropertyChanged(nameof(SelectedFrequencyMeasure));
+                OnPropertyChanged(nameof(Frequency));
+            }
+
         }
     }
 
@@ -128,51 +162,6 @@ public class SinViewModel : ValidationViewModelBase
                 _duration = value;
                 OnPropertyChanged(nameof(Duration));
             }
-        }
-    }
-
-    /// <summary>
-    /// This method is used to refresh the values of the Sine wave parameters.
-    /// </summary>
-    /// <param name="parameters">
-    ///     The parameters that are used to refresh the values of the Sine wave parameters.
-    /// </param>
-    private void Refresh(object? parameters)
-    {
-        var textBox = parameters as TextBox;
-
-        switch (textBox?.Name)
-        {
-            case "FrequencyTextBox":
-                if (double.TryParse(textBox.Text, out var frequency))
-                {
-                    Frequency = frequency;
-                }
-                break;
-
-            case "AmplitudeTextBox":
-                if (double.TryParse(textBox.Text, out var amplitude))
-                {
-                    Amplitude = amplitude;
-                }
-                break;
-
-            case "PhaseTextBox":
-                if (int.TryParse(textBox.Text, out var phase))
-                {
-                    Phase = phase;
-                }
-                break;
-
-            case "DurationTextBox":
-                if (double.TryParse(textBox.Text, out var duration))
-                {
-                    Duration = duration;
-                }
-                break;
-
-            default:
-                break;
         }
     }
 }

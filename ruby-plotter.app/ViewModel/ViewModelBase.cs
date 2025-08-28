@@ -23,24 +23,13 @@ public class ViewModelBase : INotifyPropertyChanged
         = new ObservableCollection<MeasureItem>(new List<MeasureItem>()
         {
             new MeasureItem(){Id = 1, Name = "Hz", Koeff = 1 },
-            new MeasureItem(){Id = 2, Name = "kHz", Koeff = 1000 }
+            new MeasureItem(){Id = 2, Name = "kHz", Koeff = 0.001 }
         });
 
     public virtual MeasureItem SelectedFrequencyMeasure
     {
-        get
-        {
-            return FrequencyMeasures.First(p => p.Id == _frequencyMeasureId);
-        }
-        set
-        {
-            if (value.Id != _frequencyMeasureId)
-            {
-                _frequencyMeasureId = value.Id;
-                OnPropertyChanged(nameof(SelectedFrequencyMeasure));
-            }
-
-        }
+        get => FrequencyMeasures.First(p => p.Id == _frequencyMeasureId);
+        set => _frequencyMeasureId = value.Id;
     }
 
     public virtual ObservableCollection<MeasureItem> PhaseMeasures { get; set; }
