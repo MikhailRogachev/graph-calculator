@@ -26,10 +26,9 @@ public static class FuncGenerator
         double frequency = 50,
         double duration = 1,
         double amplitude = 1,
-        int phase = 0,
+        double phase = 0,
         double framerate = 24600)
     {
-        var phaseRad = phase * Math.PI / 180;
         var freqKhz = frequency;
         int count = Convert.ToInt32(duration * framerate);
 
@@ -39,7 +38,7 @@ public static class FuncGenerator
         for (int i = 0; i < count; i++)
         {
             ts[i] = i / framerate;
-            ys[i] = amplitude * Math.Sin(0.5 * Math.PI * freqKhz * ts[i] + phaseRad);
+            ys[i] = amplitude * Math.Sin(0.5 * Math.PI * freqKhz * ts[i] + phase);
         }
 
         return (ys, ts);

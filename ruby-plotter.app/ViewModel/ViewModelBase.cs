@@ -11,6 +11,7 @@ namespace ruby_plotter.app.ViewModel;
 public class ViewModelBase : INotifyPropertyChanged
 {
     protected int _frequencyMeasureId = 1;
+    protected int _phaseMeasureId = 1;
 
     public event PropertyChangedEventHandler? PropertyChanged;
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -18,14 +19,14 @@ public class ViewModelBase : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public virtual ObservableCollection<FrequencyMeasure> FrequencyMeasures { get; set; }
-        = new ObservableCollection<FrequencyMeasure>(new List<FrequencyMeasure>()
+    public virtual ObservableCollection<MeasureItem> FrequencyMeasures { get; set; }
+        = new ObservableCollection<MeasureItem>(new List<MeasureItem>()
         {
-            new FrequencyMeasure(){Id = 1, Name = "Hz", Koeff = 1 },
-            new FrequencyMeasure(){Id = 2, Name = "kHz", Koeff = 1000 }
+            new MeasureItem(){Id = 1, Name = "Hz", Koeff = 1 },
+            new MeasureItem(){Id = 2, Name = "kHz", Koeff = 1000 }
         });
 
-    public virtual FrequencyMeasure SelectedFrequencyMeasure
+    public virtual MeasureItem SelectedFrequencyMeasure
     {
         get
         {
@@ -39,6 +40,29 @@ public class ViewModelBase : INotifyPropertyChanged
                 OnPropertyChanged(nameof(SelectedFrequencyMeasure));
             }
 
+        }
+    }
+
+    public virtual ObservableCollection<MeasureItem> PhaseMeasures { get; set; }
+        = new ObservableCollection<MeasureItem>(new List<MeasureItem>()
+        {
+            new MeasureItem(){Id = 1, Name = "Degrees", Koeff = Math.PI / 180 },
+            new MeasureItem(){Id = 2, Name = "Radians", Koeff = 1 }
+        });
+
+    public virtual MeasureItem SelectedPhaseMeasure
+    {
+        get
+        {
+            return PhaseMeasures.First(p => p.Id == _phaseMeasureId);
+        }
+        set
+        {
+            if (value.Id != _phaseMeasureId)
+            {
+                _phaseMeasureId = value.Id;
+                OnPropertyChanged(nameof(SelectedPhaseMeasure));
+            }
         }
     }
 }

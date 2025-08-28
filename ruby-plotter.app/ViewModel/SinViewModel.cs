@@ -11,7 +11,7 @@ namespace ruby_plotter.app.ViewModel;
 public class SinViewModel : ValidationViewModelBase
 {
     private double _amplitude;
-    private int _phase;
+    private double _phase;
     private double _frequency;
     private double _duration;
     private readonly SinDefaultSettings _defaultSettings;
@@ -23,6 +23,8 @@ public class SinViewModel : ValidationViewModelBase
         _frequency = parameter.Frequency;
         _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
             parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
+        _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
+            parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
         _defaultSettings = sinDefaultSettings;
 
@@ -68,23 +70,26 @@ public class SinViewModel : ValidationViewModelBase
     /// <remarks>
     ///     The value of the Phase is in degrees.
     /// </remarks>
-    public int Phase
+    public double Phase
     {
-        get => _phase;
+        get
+        {
+            return _phase;
+        }
         set
         {
             if (_phase != value)
             {
-                ClearErrors();
+                //ClearErrors();
 
-                if (value > _defaultSettings.PhaseMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.PhaseMax}");
-                }
-                else if (value < _defaultSettings.PhaseMin)
-                {
-                    AddError($"Value can't be less than {_defaultSettings.PhaseMin}");
-                }
+                //if (value > _defaultSettings.PhaseMax)
+                //{
+                //    AddError($"Value can't be more than {_defaultSettings.PhaseMax}");
+                //}
+                //else if (value < _defaultSettings.PhaseMin)
+                //{
+                //    AddError($"Value can't be less than {_defaultSettings.PhaseMin}");
+                //}
 
                 _phase = value;
                 OnPropertyChanged(nameof(Phase));
@@ -106,16 +111,16 @@ public class SinViewModel : ValidationViewModelBase
             if (Math.Abs(_frequency - value) > 0.00001)
             {
                 // Validate frequency
-                ClearErrors();
+                //ClearErrors();
 
-                if (value <= _defaultSettings.FrequencyMin)
-                {
-                    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin} Hz");
-                }
-                else if (value > _defaultSettings.FrequencyMax)
-                {
-                    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax} Hz");
-                }
+                //if (value <= _defaultSettings.FrequencyMin)
+                //{
+                //    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin} Hz");
+                //}
+                //else if (value > _defaultSettings.FrequencyMax)
+                //{
+                //    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax} Hz");
+                //}
 
                 _frequency = value;
                 OnPropertyChanged(nameof(Frequency));

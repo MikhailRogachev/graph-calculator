@@ -11,7 +11,7 @@ namespace ruby_plotter.app.ViewModel;
 public class CosViewModel : ValidationViewModelBase
 {
     private double _amplitude;
-    private int _phase;
+    private double _phase;
     private double _frequncy;
     private double _duration;
     private readonly CosDefaultSettings _defaultSettings;
@@ -68,7 +68,7 @@ public class CosViewModel : ValidationViewModelBase
     /// <remarks>
     ///     The value of the Phase is in degrees.
     /// </remarks>
-    public int Phase
+    public double Phase
     {
         get => _phase;
         set
