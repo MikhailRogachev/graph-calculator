@@ -46,18 +46,6 @@ public class SinViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_amplitude - value) > 0.00001)
             {
-                // Validate amplitude
-                ClearErrors();
-
-                if (value > _defaultSettings.AmplitudeMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.AmplitudeMax}");
-                }
-                else if (value < _defaultSettings.AmplitudeMin)
-                {
-                    AddError($"Value can't be less than {_defaultSettings.AmplitudeMin}");
-                }
-
                 _amplitude = value;
                 OnPropertyChanged(nameof(Amplitude));
             }
@@ -74,28 +62,37 @@ public class SinViewModel : ValidationViewModelBase
     {
         get
         {
-            return _phase;
+            return _phase * PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
         }
         set
         {
-            if (_phase != value)
+            double _valueDegree = value / PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
+
+            if (_phase != _valueDegree)
             {
-                //ClearErrors();
-
-                //if (value > _defaultSettings.PhaseMax)
-                //{
-                //    AddError($"Value can't be more than {_defaultSettings.PhaseMax}");
-                //}
-                //else if (value < _defaultSettings.PhaseMin)
-                //{
-                //    AddError($"Value can't be less than {_defaultSettings.PhaseMin}");
-                //}
-
-                _phase = value;
+                _phase = _valueDegree;
                 OnPropertyChanged(nameof(Phase));
             }
         }
     }
+
+    public override MeasureItem SelectedPhaseMeasure
+    {
+        get
+        {
+            return base.SelectedPhaseMeasure;
+        }
+        set
+        {
+            if (value.Id != _phaseMeasureId)
+            {
+                base.SelectedPhaseMeasure = value;
+                OnPropertyChanged(nameof(SelectedPhaseMeasure));
+                OnPropertyChanged(nameof(Phase));
+            }
+        }
+    }
+    public double PhaseDegrees => _phase;
 
     /// <summary>
     /// Gets or sets the Frequency of the Sine wave.
@@ -110,18 +107,6 @@ public class SinViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_frequency - value) > 0.00001)
             {
-                // Validate frequency
-                //ClearErrors();
-
-                //if (value <= _defaultSettings.FrequencyMin)
-                //{
-                //    AddError($"Value can't be less or equals {_defaultSettings.FrequencyMin} Hz");
-                //}
-                //else if (value > _defaultSettings.FrequencyMax)
-                //{
-                //    AddError($"Value can't be greater then {_defaultSettings.FrequencyMax} Hz");
-                //}
-
                 _frequency = value;
                 OnPropertyChanged(nameof(Frequency));
             }
@@ -141,17 +126,6 @@ public class SinViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_duration - value) > 0.00001)
             {
-                ClearErrors();
-
-                if (value <= _defaultSettings.DurationMin)
-                {
-                    AddError($"Value can't be less or equals {_defaultSettings.DurationMin}");
-                }
-                else if (value > _defaultSettings.DurationMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.DurationMax} sec");
-                }
-
                 _duration = value;
                 OnPropertyChanged(nameof(Duration));
             }

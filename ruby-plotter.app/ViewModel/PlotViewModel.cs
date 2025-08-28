@@ -101,7 +101,7 @@ public class PlotViewModel : ViewModelBase
             frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
             duration: model.Duration,
             amplitude: model.Amplitude,
-            phase: model.Phase * getPhaseKoeff(model.SelectedPhaseMeasure.Id),
+            phase: model.PhaseDegrees,
             framerate: _settings.Framerate
             );
 
@@ -224,11 +224,5 @@ public class PlotViewModel : ViewModelBase
     {
         //get frequency measure koeff
         return FrequencyMeasures.First(p => p.Id == index).Koeff;
-    }
-
-    private double getPhaseKoeff(int index)
-    {
-        //get frequency measure koeff
-        return PhaseMeasures.First(p => p.Id == index).Koeff;
     }
 }
