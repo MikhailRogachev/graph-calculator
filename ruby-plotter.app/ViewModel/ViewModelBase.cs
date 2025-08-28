@@ -46,23 +46,13 @@ public class ViewModelBase : INotifyPropertyChanged
     public virtual ObservableCollection<MeasureItem> PhaseMeasures { get; set; }
         = new ObservableCollection<MeasureItem>(new List<MeasureItem>()
         {
-            new MeasureItem(){Id = 1, Name = "Degrees", Koeff = Math.PI / 180 },
-            new MeasureItem(){Id = 2, Name = "Radians", Koeff = 1 }
+            new MeasureItem(){Id = 1, Name = "Degrees", Koeff =  1},
+            new MeasureItem(){Id = 2, Name = "Radians", Koeff = Math.PI / 180 }
         });
 
     public virtual MeasureItem SelectedPhaseMeasure
     {
-        get
-        {
-            return PhaseMeasures.First(p => p.Id == _phaseMeasureId);
-        }
-        set
-        {
-            if (value.Id != _phaseMeasureId)
-            {
-                _phaseMeasureId = value.Id;
-                OnPropertyChanged(nameof(SelectedPhaseMeasure));
-            }
-        }
+        get => PhaseMeasures.First(p => p.Id == _phaseMeasureId);
+        set => _phaseMeasureId = value.Id;
     }
 }

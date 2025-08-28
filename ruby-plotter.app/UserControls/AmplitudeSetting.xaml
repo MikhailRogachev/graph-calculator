@@ -19,15 +19,13 @@
         <TextBlock 
             Grid.Row="0" 
             Grid.Column="0" 
-            FontSize="12"
-            Text="Amplitude:" 
-            Margin="2 2 0 5"/>
+            Text="Amplitude:"
+            Style="{StaticResource SettingTextBlock}" />
 
         <TextBox 
             Grid.Row="1" 
             Grid.Column="0" 
-            Text="{Binding Amplitude, Mode=TwoWay}" 
-            Margin="2 2 2 20" 
-            Width="Auto"/>
+            Text="{Binding Amplitude, Mode=TwoWay}"
+            Style="{StaticResource SettingTextBox}"/>
     </Grid>
 </UserControl>

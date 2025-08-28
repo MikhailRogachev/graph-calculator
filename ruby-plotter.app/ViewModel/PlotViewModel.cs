@@ -135,11 +135,11 @@ public class PlotViewModel : ViewModelBase
             return;
         }
 
-        var source = FuncGenerator.Sin(
+        var source = FuncGenerator.Cos(
             frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
             duration: model.Duration,
             amplitude: model.Amplitude,
-            phase: model.Phase + 90,
+            phase: model.PhaseDegrees,
             framerate: _settings.Framerate
             );
 

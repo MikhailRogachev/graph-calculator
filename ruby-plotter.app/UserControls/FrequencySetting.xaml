@@ -11,29 +11,26 @@
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>            
         </Grid.RowDefinitions>
 
         <TextBlock 
             Grid.Row="0" 
             Grid.Column="0" 
-            FontSize="12"
-            Text="Frequency:" 
-            Margin="2 2 0 5"/>
+            Style="{StaticResource SettingTextBlock}"
+            Text="Frequency:" />
 
         <TextBox 
             Grid.Row="1" 
             Grid.Column="0" 
             Text="{Binding Frequency, Mode=TwoWay}" 
-            Margin="2 2 2 20" 
-            Width="Auto"/>
+            Style="{StaticResource SettingTextBox}"/>
 
         <ComboBox 
             Grid.Row="1" 
             Grid.Column="1" 
-            Margin="0 2 2 20" 
-            Width="Auto"
+            Style="{StaticResource SettingComboBox}"
             DisplayMemberPath="Name"
             ItemsSource="{Binding FrequencyMeasures}"
             SelectedItem="{Binding SelectedFrequencyMeasure, Mode=TwoWay}"/>

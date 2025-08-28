@@ -18,23 +18,20 @@
 
         <TextBlock 
             Grid.Row="0" 
-            Grid.Column="0" 
-            FontSize="12"
-            Text="Phase:" 
-            Margin="2 2 0 5"/>
+            Grid.Column="0"
+            Text="Phase:"
+            Style="{StaticResource SettingTextBlock}" />
 
         <TextBox 
             Grid.Row="1" 
             Grid.Column="0" 
-            Text="{Binding Phase, Mode=TwoWay}" 
-            Margin="2 2 2 20" 
-            Width="Auto"/>
+            Text="{Binding Phase, Mode=TwoWay}"
+            Style="{StaticResource SettingTextBox}"/>
 
         <ComboBox 
             Grid.Row="1" 
             Grid.Column="1" 
-            Margin="0 2 2 20" 
-            Width="Auto"
+            Style="{StaticResource SettingComboBox}"
             DisplayMemberPath="Name"
             ItemsSource="{Binding PhaseMeasures}"
             SelectedItem="{Binding SelectedPhaseMeasure, Mode=TwoWay}"/>

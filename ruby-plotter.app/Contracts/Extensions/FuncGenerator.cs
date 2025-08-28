@@ -29,7 +29,7 @@ public static class FuncGenerator
         double phase = 0,
         double framerate = 24600)
     {
-        var freqKhz = frequency;
+        var phaseRad = phase * Math.PI / 180;
         int count = Convert.ToInt32(duration * framerate);
 
         double[] ts = new double[count];
@@ -38,10 +38,21 @@ public static class FuncGenerator
         for (int i = 0; i < count; i++)
         {
             ts[i] = i / framerate;
-            ys[i] = amplitude * Math.Sin(0.5 * Math.PI * freqKhz * ts[i] + phase);
+            ys[i] = amplitude * Math.Sin(0.5 * Math.PI * frequency * ts[i] + phaseRad);
         }
 
         return (ys, ts);
+    }
+
+    public static (double[] Ys, double[] Ts) Cos(
+       double frequency = 50,
+       double duration = 1,
+       double amplitude = 1,
+       double phase = 0,
+       double framerate = 24600)
+    {
+        double _phase = phase + 90;
+        return Sin(frequency, duration, amplitude, _phase, framerate);
     }
 
     /// <summary>
