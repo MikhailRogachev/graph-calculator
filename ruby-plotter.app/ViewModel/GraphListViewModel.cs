@@ -16,7 +16,8 @@ public class GraphListViewModel : ViewModelBase
     private SinViewModel? _sinViewModel;
     private CosViewModel? _cosViewModel;
     private SincViewModel? _sincViewModel;
-    private PlotViewModel? _plotView;
+    private TrigonometricPlotViewModel? _trigonometricalPlotView;
+    private SinCardinalPlotViewModel? _sinCardinalPlotView;
 
     private readonly AppDefaultSettings _appSettings;
     private readonly ISerializerService _serializerService;
@@ -29,7 +30,8 @@ public class GraphListViewModel : ViewModelBase
         ISerializerService serializerService)
     {
         _appSettings = options == null ? throw new ArgumentNullException(nameof(options)) : options.Value;
-        _plotView = new PlotViewModel(_appSettings.PloterDefaultSettings);
+        _trigonometricalPlotView = new TrigonometricPlotViewModel(_appSettings.PloterDefaultSettings);
+        _sinCardinalPlotView = new SinCardinalPlotViewModel(_appSettings.PloterDefaultSettings);
         _serializerService = serializerService ?? throw new ArgumentNullException(nameof(serializerService));
 
         SinViewCommand = new DelegateCommand(SinViewUpdate);
@@ -39,7 +41,8 @@ public class GraphListViewModel : ViewModelBase
 
     #region properties
 
-    public PlotViewModel PlotView => _plotView!;
+    public TrigonometricPlotViewModel TrigonometricalPlotView => _trigonometricalPlotView!;
+    public SinCardinalPlotViewModel SinCardinalPlotView => _sinCardinalPlotView!;
 
     /// <summary>
     /// Get the command to create or update the Sin view model.
@@ -163,7 +166,7 @@ public class GraphListViewModel : ViewModelBase
 
         }
 
-        PlotView.Plot(SinViewModel, CosViewModel, SincViewModel);
+        TrigonometricalPlotView.Plot(SinViewModel, CosViewModel);
     }
 
     /// <summary>
@@ -202,7 +205,7 @@ public class GraphListViewModel : ViewModelBase
             }
         }
 
-        PlotView.Plot(SinViewModel, CosViewModel, SincViewModel);
+        TrigonometricalPlotView.Plot(SinViewModel, CosViewModel);
     }
 
     /// <summary>
@@ -242,7 +245,7 @@ public class GraphListViewModel : ViewModelBase
 
         }
 
-        PlotView.Plot(SinViewModel, CosViewModel, SincViewModel);
+        SinCardinalPlotView.Plot(SincViewModel);
     }
 
     #endregion

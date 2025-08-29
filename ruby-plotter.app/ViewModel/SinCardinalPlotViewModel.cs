@@ -9,14 +9,14 @@ namespace ruby_plotter.app.ViewModel;
 /// <summary>
 /// this class is the ViewModel for the PlotView.
 /// </summary>
-public class PlotViewModel : ViewModelBase
+public class SinCardinalPlotViewModel : ViewModelBase
 {
     private readonly PloterDefaultSettings _settings;
     public WpfPlot Graphs { get; } = new WpfPlot();
 
     private Dictionary<string, Scatter> _plotScatters = new Dictionary<string, Scatter>();
 
-    public PlotViewModel(PloterDefaultSettings settings)
+    public SinCardinalPlotViewModel(PloterDefaultSettings settings)
     {
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         AxisInitialization();
@@ -27,15 +27,10 @@ public class PlotViewModel : ViewModelBase
     /// <summary>
     /// This procedure plots the data on the graph.
     /// </summary>
-    /// <param name="sinView">SinViewModel</param>
-    /// <param name="cosView">CosViewModel</param>
     /// <param name="sincView">SincViewModel</param>
-    public void Plot(SinViewModel? sinView = null, CosViewModel? cosView = null, SincViewModel? sincView = null)
+    public void Plot(SincViewModel? sincView = null)
     {
         Graphs.Plot.Clear();
-
-        SinViewInit(sinView);
-        CosViewInit(cosView);
         SincViewInit(sincView);
         Graphs.Refresh();
     }
@@ -69,82 +64,6 @@ public class PlotViewModel : ViewModelBase
         {
             _plotScatters.Add(key, scatter);
         }
-    }
-
-    private void SinViewInit(SinViewModel? model)
-    {
-        RemovePlotScatter(typeof(SinViewModel));
-
-        if (model == null)
-        {
-            return;
-        }
-
-        model.PropertyChanged += (sender, args) =>
-        {
-            PlotSin(model);
-        };
-
-        PlotSin(model);
-    }
-
-    private void PlotSin(SinViewModel model)
-    {
-        RemovePlotScatter(typeof(SinViewModel));
-
-        if (model == null)
-        {
-            return;
-        }
-
-        var source = FuncGenerator.Sin(
-            frequency: model.FrequencyHz,
-            duration: model.Duration,
-            amplitude: model.Amplitude,
-            phase: model.PhaseDegrees,
-            framerate: _settings.Framerate
-            );
-
-        var scatter = GrapfPlotting(source.Ts, source.Ys, "Sine", Colors.Salmon);
-        AddPlotScatter(typeof(SinViewModel), scatter);
-    }
-
-    private void CosViewInit(CosViewModel? model)
-    {
-        RemovePlotScatter(typeof(CosViewModel));
-
-        if (model == null)
-        {
-            return;
-        }
-
-        model.PropertyChanged += (sender, args) =>
-        {
-            PlotCos(model);
-        };
-
-        PlotCos(model);
-    }
-
-    private void PlotCos(CosViewModel model)
-    {
-        RemovePlotScatter(typeof(CosViewModel));
-
-        if (model.HasErrors)
-        {
-            return;
-        }
-
-        var source = FuncGenerator.Cos(
-            frequency: model.FrequencyHz,
-            duration: model.Duration,
-            amplitude: model.Amplitude,
-            phase: model.PhaseDegrees,
-            framerate: _settings.Framerate
-            );
-
-        var scatter = GrapfPlotting(source.Ts, source.Ys, "Cosine", Colors.Green);
-        AddPlotScatter(typeof(CosViewModel), scatter);
     }
 
     private void SincViewInit(SincViewModel? model)
@@ -219,10 +138,4 @@ public class PlotViewModel : ViewModelBase
     }
 
     #endregion
-
-    private double getFrequencyKoeff(int index)
-    {
-        //get frequency measure koeff
-        return FrequencyMeasures.First(p => p.Id == index).Koeff;
-    }
 }
