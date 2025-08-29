@@ -1,5 +1,4 @@
-﻿using ruby_plotter.app.Contracts.Options;
-using ruby_plotter.app.Contracts.Parameters;
+﻿using ruby_plotter.app.Contracts.Parameters;
 using ruby_plotter.app.ViewModel;
 
 namespace ruby_plotter.tests.ViewModel;
@@ -26,8 +25,7 @@ public class CosViewModelPhaseTests
                         FrequencyMeasureId = 1,
                         Phase = 90,
                         PhaseMeasureId = 1
-                    },
-                    new CosDefaultSettings()),
+                    }),
                 2,
                 90 * Math.PI / 180
             },
@@ -40,14 +38,10 @@ public class CosViewModelPhaseTests
                         FrequencyMeasureId = 1,
                         Phase = 90,
                         PhaseMeasureId = 2
-                    },
-                    new CosDefaultSettings()),
+                    }),
                 1,
                 90
             }
         };
-
     }
-
-
 }
