@@ -188,7 +188,7 @@ public class GraphListViewModel : ViewModelBase
                     @set = ParameterExtensions.GetDefaultParameter();
                 }
 
-                CosViewModel = new CosViewModel(@set, _appSettings.CosDefaultSettings);
+                CosViewModel = new CosViewModel(@set);
             }
         }
         else

@@ -1,7 +1,4 @@
-﻿using ruby_plotter.app.Contracts.Commands;
-using ruby_plotter.app.Contracts.Options;
-using ruby_plotter.app.Contracts.Parameters;
-using System.Windows.Controls;
+﻿using ruby_plotter.app.Contracts.Parameters;
 
 namespace ruby_plotter.app.ViewModel;
 
@@ -12,29 +9,20 @@ public class CosViewModel : ValidationViewModelBase
 {
     private double _amplitude;
     private double _phase;
-    private double _frequncy;
+    private double _frequency;
     private double _duration;
-    private readonly CosDefaultSettings _defaultSettings;
 
-    public CosViewModel(SinCosParameter parameter, CosDefaultSettings cosDefaultSettings)
+    public CosViewModel(SinCosParameter parameter)
     {
         _amplitude = parameter.Amplitude;
         _phase = parameter.Phase;
-        _frequncy = parameter.Frequency;
+        _frequency = parameter.Frequency;
         _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
             parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
             parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
-        _defaultSettings = cosDefaultSettings;
-
-        RefreshCommand = new DelegateCommand(Refresh);
     }
-
-    /// <summary>
-    /// This command is used to refresh the values of the Cos wave parameters.
-    /// </summary>
-    public DelegateCommand RefreshCommand { get; }
 
     /// <summary>
     /// Gets or sets the Amplitude of the Cos wave.
@@ -46,18 +34,6 @@ public class CosViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_amplitude - value) > 0.00001)
             {
-                // Validate amplitude
-                ClearErrors();
-
-                if (value > _defaultSettings.AmplitudeMax)
-                {
-                    AddError($"Value can't be more than {_defaultSettings.AmplitudeMax}");
-                }
-                else if (value < _defaultSettings.AmplitudeMin)
-                {
-                    AddError($"Value can't be less than {_defaultSettings.AmplitudeMin}");
-                }
-
                 _amplitude = value;
                 OnPropertyChanged(nameof(Amplitude));
             }
@@ -88,6 +64,9 @@ public class CosViewModel : ValidationViewModelBase
         }
     }
 
+    /// <summary>
+    /// Get or set Selected Phase measure item.
+    /// </summary>
     public override MeasureItem SelectedPhaseMeasure
     {
         get
@@ -104,6 +83,13 @@ public class CosViewModel : ValidationViewModelBase
             }
         }
     }
+
+    /// <summary>
+    /// Get the current phase value in Degree.
+    /// </summary>
+    /// <remarks>
+    ///     This value is using for the function calculation only.
+    /// </remarks>
     public double PhaseDegrees => _phase;
 
     /// <summary>
@@ -114,14 +100,45 @@ public class CosViewModel : ValidationViewModelBase
     /// </remarks>
     public double Frequency
     {
-        get => _frequncy;
+        get => _frequency * FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
         set
         {
-            if (Math.Abs(_frequncy - value) > 0.00001 || HasErrors)
+            double _valueHz = value / FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
+
+            if (Math.Abs(_frequency - _valueHz) > 0.00001)
             {
-                _frequncy = value;
+                _frequency = _valueHz;
                 OnPropertyChanged(nameof(Frequency));
             }
+        }
+    }
+
+    /// <summary>
+    /// Get the current Frequency value in Hz.
+    /// </summary>
+    /// <remarks>
+    ///     This value is using for the function calculation only.
+    /// </remarks>
+    public double FrequencyHz => _frequency;
+
+    /// <summary>
+    /// Get or set the current frequency measure.
+    /// </summary>
+    public override MeasureItem SelectedFrequencyMeasure
+    {
+        get
+        {
+            return base.SelectedFrequencyMeasure;
+        }
+        set
+        {
+            if (value.Id != _frequencyMeasureId)
+            {
+                base.SelectedFrequencyMeasure = value;
+                OnPropertyChanged(nameof(SelectedFrequencyMeasure));
+                OnPropertyChanged(nameof(Frequency));
+            }
+
         }
     }
 
@@ -138,65 +155,10 @@ public class CosViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_duration - value) > 0.00001)
             {
-                //ClearErrors();
-
-                //if (value <= _defaultSettings.DurationMin)
-                //{
-                //    AddError($"Value can't be less or equals {_defaultSettings.DurationMin}");
-                //}
-                //else if (value > _defaultSettings.DurationMax)
-                //{
-                //    AddError($"Value can't be more than {_defaultSettings.DurationMax} sec");
-                //}
-
                 _duration = value;
                 OnPropertyChanged(nameof(Duration));
             }
         }
     }
 
-    /// <summary>
-    /// This method is used to refresh the values of the Cos wave parameters.
-    /// </summary>
-    /// <param name="parameters">
-    ///     The parameters that are used to refresh the values of the Cos wave parameters.
-    /// </param>
-    private void Refresh(object? parameters)
-    {
-        var textBox = parameters as TextBox;
-
-        switch (textBox?.Name)
-        {
-            case "FrequencyTextBox":
-                if (double.TryParse(textBox.Text, out var frequency))
-                {
-                    Frequency = frequency;
-                }
-                break;
-
-            case "AmplitudeTextBox":
-                if (double.TryParse(textBox.Text, out var amplitude))
-                {
-                    Amplitude = amplitude;
-                }
-                break;
-
-            case "PhaseTextBox":
-                if (int.TryParse(textBox.Text, out var phase))
-                {
-                    Phase = phase;
-                }
-                break;
-
-            case "DurationTextBox":
-                if (double.TryParse(textBox.Text, out var duration))
-                {
-                    Duration = duration;
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
 }

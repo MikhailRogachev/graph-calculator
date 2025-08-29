@@ -136,7 +136,7 @@ public class PlotViewModel : ViewModelBase
         }
 
         var source = FuncGenerator.Cos(
-            frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
+            frequency: model.FrequencyHz,
             duration: model.Duration,
             amplitude: model.Amplitude,
             phase: model.PhaseDegrees,
