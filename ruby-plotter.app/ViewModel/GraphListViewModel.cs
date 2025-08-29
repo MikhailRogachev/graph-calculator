@@ -30,8 +30,8 @@ public class GraphListViewModel : ViewModelBase
         ISerializerService serializerService)
     {
         _appSettings = options == null ? throw new ArgumentNullException(nameof(options)) : options.Value;
-        _trigonometricalPlotView = new TrigonometricPlotViewModel(_appSettings.PloterDefaultSettings);
-        _sinCardinalPlotView = new SinCardinalPlotViewModel(_appSettings.PloterDefaultSettings);
+        _trigonometricalPlotView = new TrigonometricPlotViewModel(_appSettings.TrigonometricPlotterSettings);
+        _sinCardinalPlotView = new SinCardinalPlotViewModel(_appSettings.SinCardinalPlotterSettings);
         _serializerService = serializerService ?? throw new ArgumentNullException(nameof(serializerService));
 
         SinViewCommand = new DelegateCommand(SinViewUpdate);

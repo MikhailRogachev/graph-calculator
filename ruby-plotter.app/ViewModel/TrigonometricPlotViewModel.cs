@@ -11,12 +11,12 @@ namespace ruby_plotter.app.ViewModel;
 /// </summary>
 public class TrigonometricPlotViewModel : ViewModelBase
 {
-    private readonly PloterDefaultSettings _settings;
+    private readonly TrigonometricPlotterSettings _settings;
     public WpfPlot Graphs { get; } = new WpfPlot();
 
     private Dictionary<string, Scatter> _plotScatters = new Dictionary<string, Scatter>();
 
-    public TrigonometricPlotViewModel(PloterDefaultSettings settings)
+    public TrigonometricPlotViewModel(TrigonometricPlotterSettings settings)
     {
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         AxisInitialization();
@@ -151,7 +151,7 @@ public class TrigonometricPlotViewModel : ViewModelBase
     private void AxisInitialization()
     {
         // axis limits
-        Graphs.Plot.Axes.SetLimits(_settings.Xmin, _settings.Xmax, _settings.Ymin, _settings.Ymax);
+        Graphs.Plot.Axes.SetLimits(_settings.XMin, _settings.XMax, _settings.YMin, _settings.YMax);
         // axis labels
         Graphs.Plot.XLabel(_settings.Xlabel);
         Graphs.Plot.YLabel(_settings.Ylabel);

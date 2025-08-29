@@ -11,12 +11,12 @@ namespace ruby_plotter.app.ViewModel;
 /// </summary>
 public class SinCardinalPlotViewModel : ViewModelBase
 {
-    private readonly PloterDefaultSettings _settings;
+    private readonly SinCardinalPlotterSettings _settings;
     public WpfPlot Graphs { get; } = new WpfPlot();
 
     private Dictionary<string, Scatter> _plotScatters = new Dictionary<string, Scatter>();
 
-    public SinCardinalPlotViewModel(PloterDefaultSettings settings)
+    public SinCardinalPlotViewModel(SinCardinalPlotterSettings settings)
     {
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         AxisInitialization();
@@ -96,7 +96,7 @@ public class SinCardinalPlotViewModel : ViewModelBase
             xStart: model.xMin,
             framerate: _settings.Framerate
             );
-        var scatter = GrapfPlotting(source.Ts, source.Ys, "sinc", Colors.Black);
+        var scatter = GrapfPlotting(source.Ts, source.Ys, "Sine Cardinal", Colors.Black);
         AddPlotScatter(typeof(SincViewModel), scatter);
     }
 
@@ -106,7 +106,7 @@ public class SinCardinalPlotViewModel : ViewModelBase
     private void AxisInitialization()
     {
         // axis limits
-        Graphs.Plot.Axes.SetLimits(_settings.Xmin, _settings.Xmax, _settings.Ymin, _settings.Ymax);
+        Graphs.Plot.Axes.SetLimits(_settings.XMin, _settings.XMax, _settings.YMin, _settings.YMax);
         // axis labels
         Graphs.Plot.XLabel(_settings.Xlabel);
         Graphs.Plot.YLabel(_settings.Ylabel);
