@@ -7,10 +7,10 @@
 /// </summary>
 public class AppDefaultSettings
 {
-    public SinDefaultSettings SinDefaultSettings { get; set; } = new SinDefaultSettings();
-    public CosDefaultSettings CosDefaultSettings { get; set; } = new CosDefaultSettings();
-    public SincDefaultSettings SincDefaultSettings { get; set; } = new SincDefaultSettings();
-    public PloterDefaultSettings PloterDefaultSettings { get; set; } = new PloterDefaultSettings();
+    public TrigonometricPlotterSettings TrigonometricPlotterSettings { get; set; } = new TrigonometricPlotterSettings();
+    public SinCardinalPlotterSettings SinCardinalPlotterSettings { get; set; } = new SinCardinalPlotterSettings();
+    public TrigonometricValidationSettings TrigonometricValidationSettings { get; set; } = new TrigonometricValidationSettings();
+    public SincValidationSettings SincValidationSettings { get; set; } = new SincValidationSettings();
 
     /// <summary>
     /// Gets or sets the default file path used by the application.
