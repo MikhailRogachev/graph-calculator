@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ruby_plotter.app.Views
 {
     /// <summary>
-    /// Interaction logic for Plotter.xaml
+    /// Interaction logic for TrigonometricalControl.xaml
     /// </summary>
-    public partial class Plotter : UserControl
+    public partial class TrigonometricalControl : UserControl
     {
-        public Plotter()
+        public TrigonometricalControl()
         {
             InitializeComponent();
         }

@@ -19,9 +19,6 @@
         <DataTemplate DataType="{x:Type viewModel:SincViewModel}">
             <views:SincControl/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:PlotViewModel}">
-            <views:Plotter/>
-        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <!-- User Control's main grid -->
@@ -79,9 +76,16 @@
             </Grid>
         </Grid>
 
-        <!-- Right (plot) grid -->
-        <ContentControl 
-            Grid.Column="1" 
-            Content="{Binding PlotView.Graphs}"/>
+        <!--<views:TrigonometricalControl Grid.Column="1" />-->
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+
+            <views:TrigonometricalControl Grid.Row="0" />
+            <views:PlotterControl Grid.Row="1"/>
+        </Grid>
     </Grid>
 </UserControl>
