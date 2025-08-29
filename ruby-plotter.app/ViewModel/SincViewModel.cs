@@ -1,7 +1,4 @@
-﻿using ruby_plotter.app.Contracts.Commands;
-using ruby_plotter.app.Contracts.Options;
-using ruby_plotter.app.Contracts.Parameters;
-using System.Windows.Controls;
+﻿using ruby_plotter.app.Contracts.Parameters;
 
 namespace ruby_plotter.app.ViewModel;
 
@@ -11,23 +8,17 @@ namespace ruby_plotter.app.ViewModel;
 /// </summary>
 public class SincViewModel : ValidationViewModelBase
 {
-    private double _frequncy;
-    private double _xmin;
+    private double _frequency;
     private double _xmax;
-    private readonly SincDefaultSettings _sincDefaultSettings;
+    private double _xmin;
 
-    public DelegateCommand RefreshCommand { get; }
-
-    public SincViewModel(SincParameter parameter, SincDefaultSettings sincDefaultSettings)
+    public SincViewModel(SincParameter parameter)
     {
-        _frequncy = parameter.Frequency;
+        _frequency = parameter.Frequency;
         _frequencyMeasureId = FrequencyMeasures.Any(p => p.Id == parameter.FrequencyMeasureId) ?
             parameter.FrequencyMeasureId : FrequencyMeasures.First().Id;
         _xmin = parameter.xMin;
         _xmax = parameter.xMax;
-        _sincDefaultSettings = sincDefaultSettings;
-
-        RefreshCommand = new DelegateCommand(Refresh);
     }
 
     /// <summary>
@@ -38,56 +29,45 @@ public class SincViewModel : ValidationViewModelBase
     /// </remarks>
     public double Frequency
     {
-        get => _frequncy;
+        get => _frequency * FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
         set
         {
-            if (Math.Abs(_frequncy - value) > 0.00001)
+            double _valueHz = value / FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
+
+            if (Math.Abs(_frequency - _valueHz) > 0.00001)
             {
-                // Validate frequency
-                ClearErrors();
-
-                if (value <= _sincDefaultSettings.FrequencyMin)
-                {
-                    AddError($"Value can't be less or equals {_sincDefaultSettings.FrequencyMin}");
-                }
-                else if (value > _sincDefaultSettings.FrequencyMax)
-                {
-                    AddError($"Value can't be more then {_sincDefaultSettings.FrequencyMax} Hz");
-                }
-
-                _frequncy = value;
+                _frequency = _valueHz;
                 OnPropertyChanged(nameof(Frequency));
             }
         }
     }
 
     /// <summary>
-    /// Gets or sets the value for the Sinc function start point.
+    /// Get the current Frequency value in Hz.
     /// </summary>
     /// <remarks>
-    ///     The value of the xMin is in seconds.
+    ///     This value is using for the function calculation only.
     /// </remarks>
-    public double xMin
+    public virtual double FrequencyHz => _frequency;
+
+    /// <summary>
+    /// Get or set the current frequency measure.
+    /// </summary>
+    public override MeasureItem SelectedFrequencyMeasure
     {
-        get => _xmin;
+        get
+        {
+            return base.SelectedFrequencyMeasure;
+        }
         set
         {
-            ClearErrors();
-
-            if (Math.Abs(_xmin - value) > 0.001)
+            if (value.Id != _frequencyMeasureId)
             {
-                if (value < _sincDefaultSettings.Xmin)
-                {
-                    AddError($"Value can't be less than {_sincDefaultSettings.Xmin}");
-                }
-                else if (value >= xMax)
-                {
-                    AddError("xMin can't be euals or greater than xMax");
-                }
-
-                _xmin = value;
-                OnPropertyChanged(nameof(xMin));
+                base.SelectedFrequencyMeasure = value;
+                OnPropertyChanged(nameof(SelectedFrequencyMeasure));
+                OnPropertyChanged(nameof(Frequency));
             }
+
         }
     }
 
@@ -104,17 +84,6 @@ public class SincViewModel : ValidationViewModelBase
         {
             if (Math.Abs(_xmax - value) > 0.001)
             {
-                ClearErrors();
-
-                if (value > _sincDefaultSettings.Xmax)
-                {
-                    AddError($"Value can't be greater then {_sincDefaultSettings.Xmax}");
-                }
-                else if (value <= xMin)
-                {
-                    AddError("Value can't be less than xMin");
-                }
-
                 _xmax = value;
                 OnPropertyChanged(nameof(xMax));
             }
@@ -122,40 +91,21 @@ public class SincViewModel : ValidationViewModelBase
     }
 
     /// <summary>
-    /// This method is used to refresh the values of the Sinc wave parameters.
+    /// Gets or sets the value for the Sinc function start point.
     /// </summary>
-    /// <param name="parameters">
-    ///     The parameters that are used to refresh the values of the Sinc wave parameters.
-    /// </param>
-    private void Refresh(object? parameters)
+    /// <remarks>
+    ///     The value of the xMin is in seconds.
+    /// </remarks>
+    public double xMin
     {
-        var textBox = parameters as TextBox;
-
-        switch (textBox?.Name)
+        get => _xmin;
+        set
         {
-            case "FrequencyTextBox":
-                if (double.TryParse(textBox.Text, out var frequency))
-                {
-                    Frequency = frequency;
-                }
-                break;
-
-            case "xMinTextBox":
-                if (double.TryParse(textBox.Text, out var xmin))
-                {
-                    xMin = xmin;
-                }
-                break;
-
-            case "xMaxTextBox":
-                if (int.TryParse(textBox.Text, out var xmax))
-                {
-                    xMax = xmax;
-                }
-                break;
-
-            default:
-                break;
+            if (Math.Abs(_xmin - value) > 0.001)
+            {
+                _xmin = value;
+                OnPropertyChanged(nameof(xMin));
+            }
         }
     }
 }

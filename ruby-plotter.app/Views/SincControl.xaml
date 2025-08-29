@@ -38,49 +38,11 @@
         </StackPanel>
 
         <usercontrols:FrequencySetting
-                Grid.Row="1"
+                Grid.Row="1" 
                 Grid.ColumnSpan="2" />
 
-        <TextBlock 
-            Style="{StaticResource InputTextBlock}"
+        <usercontrols:RangeSetting
             Grid.Row="2"
-            Grid.Column="0" 
-            Text="X min:" 
-            ToolTip="Start Point"/>
-
-        <TextBox x:Name="xMinTextBox"
-            Style="{StaticResource InputTextBox}"
-            Grid.Row="2"
-            Grid.Column="1"
-            Text="{
-                Binding xMin, 
-                Mode=TwoWay, 
-                ValidatesOnExceptions=False, 
-                UpdateSourceTrigger=PropertyChanged, 
-                Converter={StaticResource CustomTextDoubleConverter}}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="1"/>   
-
-        <TextBlock 
-            Style="{StaticResource InputTextBlock}"
-            Grid.Row="3"
-            Grid.Column="0" 
-            Text="X max:" 
-            ToolTip="End Point"/>
-
-        <TextBox x:Name="xMaxTextBox"
-            Style="{StaticResource InputTextBox}"
-            Grid.Row="3"
-            Grid.Column="1"
-            Text="{
-                Binding xMax, 
-                Mode=TwoWay, 
-                ValidatesOnExceptions=False, 
-                UpdateSourceTrigger=PropertyChanged, 
-                Converter={StaticResource CustomTextDoubleConverter}}"
-            handlers:EnterKeyHandler.IsEnabled="True"
-            handlers:FocusOnValidationErrorHandler.IsEnabled="True"
-            KeyboardNavigation.TabIndex="2"/>   
+            Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>

@@ -227,7 +227,7 @@ public class GraphListViewModel : ViewModelBase
                     @set = ParameterExtensions.GetDefaultSincParameter();
                 }
 
-                SincViewModel = new SincViewModel(@set, _appSettings.SincDefaultSettings);
+                SincViewModel = new SincViewModel(@set);
             }
         }
         else

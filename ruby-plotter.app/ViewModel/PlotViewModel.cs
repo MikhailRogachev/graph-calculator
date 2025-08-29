@@ -172,7 +172,7 @@ public class PlotViewModel : ViewModelBase
         }
 
         var source = FuncGenerator.SinCardinal(
-            frequency: model.Frequency * getFrequencyKoeff(model.SelectedFrequencyMeasure.Id),
+            frequency: model.FrequencyHz,
             xEnd: model.xMax,
             xStart: model.xMin,
             framerate: _settings.Framerate
