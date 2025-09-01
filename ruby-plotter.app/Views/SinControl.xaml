@@ -41,18 +41,22 @@
 
         <usercontrols:FrequencySetting
             Grid.Row="1"
-            Grid.ColumnSpan="2" />
+            Grid.ColumnSpan="2" 
+            TabIndex="0"/>
 
         <usercontrols:DurationSetting
             Grid.Row="2"
-            Grid.ColumnSpan="2" />
+            Grid.ColumnSpan="2" 
+            TabIndex="1"/>
 
         <usercontrols:AmplitudeSetting
             Grid.Row="3"
-            Grid.ColumnSpan="2" />
+            Grid.ColumnSpan="2" 
+            TabIndex="2"/>
 
         <usercontrols:PhaseSetting
             Grid.Row="4"
-            Grid.ColumnSpan="2" />        
+            Grid.ColumnSpan="2" 
+            TabIndex="3"/>        
     </Grid>
 </UserControl>

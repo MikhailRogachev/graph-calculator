@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="ruby_plotter.app.UserControls.AmplitudeSetting"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:handlers="clr-namespace:ruby_plotter.app.Contracts.Handlers"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ruby_plotter.app.UserControls"
              mc:Ignorable="d" 
@@ -20,12 +21,14 @@
             Grid.Row="0" 
             Grid.Column="0" 
             Text="Amplitude:"
-            Style="{StaticResource SettingTextBlock}" />
+            Style="{StaticResource SettingTextBlock}" 
+            />
 
         <TextBox 
             Grid.Row="1" 
             Grid.Column="0" 
             Text="{Binding Amplitude, Mode=TwoWay}"
-            Style="{StaticResource SettingTextBox}"/>
+            Style="{StaticResource SettingTextBox}"
+            handlers:EnterKeyHandler.IsEnabled="True"/>
     </Grid>
 </UserControl>
