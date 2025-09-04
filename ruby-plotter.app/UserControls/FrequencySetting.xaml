@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:handlers="clr-namespace:ruby_plotter.app.Contracts.Handlers"
+             xmlns:validators="clr-namespace:ruby_plotter.app.Contracts.Validators"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ruby_plotter.app.UserControls"
              mc:Ignorable="d">
     <Grid Width="250">
         <Grid.ColumnDefinitions>
@@ -24,10 +24,19 @@
 
         <TextBox 
             Grid.Row="1" 
-            Grid.Column="0" 
-            Text="{Binding Frequency, Mode=TwoWay}" 
+            Grid.Column="0"
+            Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
             Style="{StaticResource SettingTextBox}" 
-            handlers:EnterKeyHandler.IsEnabled="True"/>
+            handlers:EnterKeyHandler.IsEnabled="True"
+            handlers:FocusOnValidationErrorHandler.IsEnabled="True">
+            <TextBox.Text>
+                <Binding Path="Frequency" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:DoubleInputValidator IsPositiveOnly="True" ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
         <ComboBox 
             Grid.Row="1" 

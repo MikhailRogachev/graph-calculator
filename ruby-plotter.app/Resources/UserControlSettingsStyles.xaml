@@ -12,6 +12,14 @@
         <Setter Property="BorderBrush" Value="#cccccc"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="#f0f0f0"/>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="Background" Value="#ffcccc"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style TargetType="ComboBox" x:Key="SettingComboBox">
         <Setter Property="Width" Value="Auto"/>
@@ -26,5 +34,11 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Margin" Value="10 2 0 2" />
     </Style>
+    <ControlTemplate x:Key="ValidationTemplate">
+        <DockPanel>
+            <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+            <AdornedElementPlaceholder/>
+        </DockPanel>
+    </ControlTemplate>
 
 </ResourceDictionary>
