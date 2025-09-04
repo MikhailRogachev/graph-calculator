@@ -34,9 +34,11 @@ public partial class App : Application
             .Bind(config.GetSection(nameof(AppDefaultSettings)));
 
         services.AddOptions<TrigonometricPlotterSettings>()
-            .Bind(config.GetSection(nameof(AppDefaultSettings)).GetSection(nameof(TrigonometricPlotterSettings)));
+            .Bind(config.GetSection(nameof(AppDefaultSettings))
+                .GetSection(nameof(TrigonometricPlotterSettings)));
         services.AddOptions<SinCardinalPlotterSettings>()
-            .Bind(config.GetSection(nameof(AppDefaultSettings)).GetSection(nameof(SinCardinalPlotterSettings)));
+            .Bind(config.GetSection(nameof(AppDefaultSettings))
+                .GetSection(nameof(SinCardinalPlotterSettings)));
 
         services.AddTransient<MainWindow>();
         services.AddTransient<MainViewModel>();
