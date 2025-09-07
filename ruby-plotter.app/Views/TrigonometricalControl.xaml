@@ -22,5 +22,24 @@
         <ContentControl 
             Grid.Row="1" 
             Content="{Binding TrigonometricalPlotView.Graphs}"/>
+
+        <Border 
+            Grid.Row="2" 
+            Background="GhostWhite" 
+            BorderBrush="Gainsboro" 
+            Margin="40 0 10 0"
+            BorderThickness="1">
+            
+            <StackPanel            
+                Orientation="Horizontal"
+                HorizontalAlignment="Left" 
+                Margin="5 0 0 0"
+                VerticalAlignment="Center">
+                <TextBlock Text="x-Axis:" />
+                <TextBox Width="100" Margin="5 0 0 0"/>
+                <TextBlock Text="y-Axis:" Margin="10 0 0 0" />
+                <TextBox Width="100" Margin="5 0 0 0"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>
