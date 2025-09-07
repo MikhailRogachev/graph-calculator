@@ -89,7 +89,7 @@ public class TrigonometricPlotViewModel : ViewModelBase
     {
         RemovePlotScatter(typeof(SinViewModel));
 
-        if (model == null)
+        if (model == null || model.HasErrors)
         {
             return;
         }
@@ -127,7 +127,7 @@ public class TrigonometricPlotViewModel : ViewModelBase
     {
         RemovePlotScatter(typeof(CosViewModel));
 
-        if (model.HasErrors)
+        if (model == null || model.HasErrors)
         {
             return;
         }

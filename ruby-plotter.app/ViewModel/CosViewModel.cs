@@ -1,4 +1,5 @@
-﻿using ruby_plotter.app.Contracts.Parameters;
+﻿using ruby_plotter.app.Contracts.Options;
+using ruby_plotter.app.Contracts.Parameters;
 
 namespace ruby_plotter.app.ViewModel;
 
@@ -7,5 +8,6 @@ namespace ruby_plotter.app.ViewModel;
 /// </summary>
 public class CosViewModel : TrigonometricViewModel
 {
-    public CosViewModel(SinCosParameter parameter) : base(parameter) { }
+    public CosViewModel(SinCosParameter parameter, TrigonometricValidationSettings validationSettings)
+        : base(parameter, validationSettings) { }
 }

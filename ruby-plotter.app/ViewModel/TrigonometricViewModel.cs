@@ -1,4 +1,5 @@
-﻿using ruby_plotter.app.Contracts.Parameters;
+﻿using ruby_plotter.app.Contracts.Options;
+using ruby_plotter.app.Contracts.Parameters;
 
 namespace ruby_plotter.app.ViewModel;
 
@@ -8,9 +9,13 @@ public class TrigonometricViewModel : ValidationViewModelBase
     private double _duration;
     private double _frequency;
     private double _phase;
+    private readonly TrigonometricValidationSettings _validationSettings;
 
-    public TrigonometricViewModel(SinCosParameter parameter)
+    public TrigonometricViewModel(SinCosParameter parameter, TrigonometricValidationSettings validationSettings)
     {
+        ArgumentNullException.ThrowIfNull(parameter, nameof(parameter));
+        ArgumentNullException.ThrowIfNull(validationSettings, nameof(validationSettings));
+
         _amplitude = parameter.Amplitude;
         _phase = parameter.Phase;
         _frequency = parameter.Frequency;
@@ -19,6 +24,8 @@ public class TrigonometricViewModel : ValidationViewModelBase
         _phaseMeasureId = PhaseMeasures.Any(p => p.Id == parameter.PhaseMeasureId) ?
             parameter.PhaseMeasureId : PhaseMeasures.First().Id;
         _duration = parameter.Duration;
+
+        _validationSettings = validationSettings;
     }
 
     /// <summary>
@@ -29,8 +36,15 @@ public class TrigonometricViewModel : ValidationViewModelBase
         get => _amplitude;
         set
         {
+            ClearErrors(nameof(Amplitude));
+
             if (Math.Abs(_amplitude - value) > 0.00001)
             {
+                if (value < _validationSettings.AmplitudeMin || value > _validationSettings.AmplitudeMax)
+                {
+                    AddError($"The Amplitude must be between {_validationSettings.AmplitudeMin} and {_validationSettings.AmplitudeMax}.", nameof(Amplitude));
+                }
+
                 _amplitude = value;
                 OnPropertyChanged(nameof(Amplitude));
             }
@@ -48,8 +62,15 @@ public class TrigonometricViewModel : ValidationViewModelBase
         get => _duration;
         set
         {
+            ClearErrors(nameof(Duration));
+
             if (Math.Abs(_duration - value) > 0.00001)
             {
+                if (value <= 0 || value > _validationSettings.DurationMax)
+                {
+                    AddError($"The Duration must be between 0 and {_validationSettings.DurationMax}.", nameof(Duration));
+                }
+
                 _duration = value;
                 OnPropertyChanged(nameof(Duration));
             }
@@ -67,10 +88,16 @@ public class TrigonometricViewModel : ValidationViewModelBase
         get => _frequency * FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
         set
         {
+            ClearErrors(nameof(Frequency));
             double _valueHz = value / FrequencyMeasures.First(p => p.Id == _frequencyMeasureId).Koeff;
 
             if (Math.Abs(_frequency - _valueHz) > 0.00001)
             {
+                if (_valueHz <= _validationSettings.FrequencyHzMin || _valueHz > _validationSettings.FrequencyHzMax)
+                {
+                    AddError($"The Frequency must be between {_validationSettings.FrequencyHzMin} and {_validationSettings.FrequencyHzMax} Hz.", nameof(Frequency));
+                }
+
                 _frequency = _valueHz;
                 OnPropertyChanged(nameof(Frequency));
             }
@@ -99,10 +126,15 @@ public class TrigonometricViewModel : ValidationViewModelBase
         }
         set
         {
+            ClearErrors(nameof(Phase));
             double _valueDegree = value / PhaseMeasures.First(p => p.Id == _phaseMeasureId).Koeff;
 
             if (_phase != _valueDegree)
             {
+                if (_valueDegree < _validationSettings.PhaseMin || _valueDegree > _validationSettings.PhaseMax)
+                {
+                    AddError($"The Phase must be between {_validationSettings.PhaseMin} and {_validationSettings.PhaseMax} degrees.", nameof(Phase));
+                }
                 _phase = _valueDegree;
                 OnPropertyChanged(nameof(Phase));
             }

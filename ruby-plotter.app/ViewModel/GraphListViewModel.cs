@@ -151,7 +151,7 @@ public class GraphListViewModel : ViewModelBase
                     @set = ParameterExtensions.GetDefaultParameter();
                 }
 
-                SinViewModel = new SinViewModel(@set);
+                SinViewModel = new SinViewModel(@set, _appSettings.TrigonometricValidationSettings);
             }
         }
         else
@@ -191,7 +191,7 @@ public class GraphListViewModel : ViewModelBase
                     @set = ParameterExtensions.GetDefaultParameter();
                 }
 
-                CosViewModel = new CosViewModel(@set);
+                CosViewModel = new CosViewModel(@set, _appSettings.TrigonometricValidationSettings);
             }
         }
         else
